@@ -15,25 +15,25 @@
 }
 
 :root {
-  --background: 214 18% 11%;
-  --foreground: 212 24% 93%;
-  --card: 214 15% 17%;
-  --card-foreground: 212 24% 93%;
-  --popover: 214 15% 17%;
-  --popover-foreground: 212 24% 93%;
-  --primary: 24 78% 54%;
+  --background: 212 24% 93%; /* #ececec */
+  --foreground: 213 20% 10%;
+  --card: 212 20% 85%; /* #d0d0d0 */
+  --card-foreground: 213 20% 10%;
+  --popover: 212 20% 85%;
+  --popover-foreground: 213 20% 10%;
+  --primary: 32 82% 64%; /* #eba75f Orange */
   --primary-foreground: 213 20% 10%;
-  --secondary: 217 10% 35%;
-  --secondary-foreground: 212 24% 96%;
-  --muted: 214 12% 24%;
-  --muted-foreground: 213 16% 73%;
-  --accent: 206 72% 61%;
-  --accent-foreground: 214 18% 12%;
+  --secondary: 210 75% 56%; /* #388de6 Blue */
+  --secondary-foreground: 212 24% 93%;
+  --muted: 214 10% 44%;
+  --muted-foreground: 213 16% 33%;
+  --accent: 210 75% 56%; /* Blue */
+  --accent-foreground: 212 24% 93%;
   --destructive: 2 73% 60%;
   --destructive-foreground: 210 40% 98%;
-  --border: 214 10% 44%;
+  --border: 0 0% 0%; /* Black for Brutalism */
   --input: 214 10% 44%;
-  --ring: 24 78% 54%;
+  --ring: 32 82% 64%;
   --radius: 0;
 }
 
@@ -48,14 +48,11 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: "Arkham Sans", "Inter", "Segoe UI", sans-serif;
+    font-family: var(--font-roboto), sans-serif;
     background-image:
-      linear-gradient(to right, rgba(120, 138, 156, 0.08) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(120, 138, 156, 0.08) 1px, transparent 1px),
-      radial-gradient(circle at top left, rgba(237, 127, 39, 0.1), transparent 26%),
-      radial-gradient(circle at 78% 14%, rgba(90, 169, 226, 0.18), transparent 28%),
-      radial-gradient(circle at bottom right, rgba(90, 169, 226, 0.14), transparent 30%);
-    background-size: 40px 40px, 40px 40px, auto, auto, auto;
+      linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
   }
 
   h1,
@@ -64,19 +61,47 @@
   h4,
   h5,
   h6 {
-    font-family: "Arkham Mono", "SFMono-Regular", ui-monospace, monospace;
-    letter-spacing: 0.08em;
+    font-family: var(--font-monoton), cursive;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
   }
+}
 
-  a,
-  button,
-  input,
-  textarea,
-  select {
-    transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease, opacity 150ms ease;
+@layer components {
+  .brutalist-card {
+    @apply border-4 border-black bg-white p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)];
+  }
+
+  .brutalist-button {
+    @apply relative inline-flex items-center justify-center border-4 border-black bg-primary px-8 py-4 font-black uppercase tracking-widest text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:translate-x-0 active:translate-y-0 active:shadow-none;
+  }
+
+  .brutalist-button-blue {
+    @apply brutalist-button bg-secondary text-white;
+  }
+
+  .fab {
+    @apply fixed bottom-8 right-8 flex h-16 w-16 items-center justify-center rounded-full border-4 border-black bg-gradient-to-br from-primary to-secondary text-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-transform hover:scale-110 active:scale-95 z-50;
+  }
+
+  .ticker-wrap {
+    @apply fixed top-0 left-0 w-full h-12 border-b-4 border-black bg-white overflow-hidden z-40 flex items-center;
+  }
+
+  .ticker {
+    @apply inline-block whitespace-nowrap px-4 py-2 font-black uppercase tracking-widest animate-marquee;
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+  }
+
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
   }
 }
+
 
 @layer components {
   .shell {

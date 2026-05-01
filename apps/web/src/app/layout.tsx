@@ -1,9 +1,22 @@
 import type { Metadata } from 'next'
+import { Monoton, Roboto } from 'next/font/google'
 import './globals.css'
+
+const monoton = Monoton({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-monoton',
+})
+
+const roboto = Roboto({
+  weight: ['400', '700', '900'],
+  subsets: ['latin'],
+  variable: '--font-roboto',
+})
 
 export const metadata: Metadata = {
   title: 'RobcoTech Pro',
-  description: 'Founder operations, investor reporting, workflow control, and executive visibility in one system.',
+  description: 'Enterprise operations, performance reporting, workflow control, and executive oversight in one system.',
   metadataBase: new URL(process.env.APP_URL || 'https://robcotech.pro'),
 }
 
@@ -13,8 +26,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" className={`${monoton.variable} ${roboto.variable}`}>
+      <body className="font-sans">{children}</body>
     </html>
   )
 }
+

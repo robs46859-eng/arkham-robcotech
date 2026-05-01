@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { ArrowLeft, ArrowRight, Check, Loader2, ShieldCheck, Sparkles } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Check, Loader2, ShieldCheck, Sparkles, MessageSquare, Cloud, Newspaper } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import {
   Commitment,
@@ -26,6 +26,7 @@ export default function PricingPage() {
   const [loadingPlan, setLoadingPlan] = useState<PlanId | null>(null)
   const [selectedPlan, setSelectedPlan] = useState<PlanId | null>(null)
   const [autostart, setAutostart] = useState(false)
+  const [showTickerWidget, setShowTickerWidget] = useState<'none' | 'weather' | 'news'>('none')
 
   const activeVertical = process.env.NEXT_PUBLIC_VERTICAL || 'saas'
   const isEcom = activeVertical === 'ecommerce'
@@ -33,7 +34,28 @@ export default function PricingPage() {
   const isMedia = activeVertical === 'media'
   const isStaffing = activeVertical === 'staffing'
   const isStudio = activeVertical === 'studio'
+  
+  // Professional Language Mapping
+  const getVerticalTitle = () => {
+    if (isDigitalItGirl) return 'Market Intelligence Suites'
+    if (isEcom) return 'Omni-channel Revenue Systems'
+    if (isMedia) return 'Content Distribution Frameworks'
+    if (isStaffing) return 'Talent Acquisition Engines'
+    if (isStudio) return 'Project Delivery Standards'
+    return 'Operational Control Suites'
+  }
+
+  const getVerticalHero = () => {
+    if (isDigitalItGirl) return 'DEPLOY NICHE AUTHORITY MAPPING.'
+    if (isEcom) return 'PRESERVE MARGIN INTEGRITY.'
+    if (isMedia) return 'OPTIMIZE CONTENT YIELD.'
+    if (isStaffing) return 'MAXIMIZE PLACEMENT THROUGHPUT.'
+    if (isStudio) return 'STANDARDIZE PROJECT DELIVERY.'
+    return 'ESTABLISH EXECUTIVE OVERSIGHT.'
+  }
+
   const activePlans = isDigitalItGirl ? digPlanDefinitions : isEcom ? ecomPlanDefinitions : isMedia ? mediaPlanDefinitions : isStaffing ? staffPlanDefinitions : isStudio ? planDefinitions : planDefinitions
+  
   useEffect(() => {
     if (typeof window === 'undefined') return
     const params = new URLSearchParams(window.location.search)
@@ -51,22 +73,17 @@ export default function PricingPage() {
   useEffect(() => {
     if (!autostart || !selectedPlan) return
     void startCheckout(selectedPlan)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autostart, selectedPlan])
 
   const comparisonLine = useMemo(
-    () => `Save ${Math.round(commitmentDiscountRate * 100)}% when you lock a 3-month commitment.`,
+    () => `SECURE ${Math.round(commitmentDiscountRate * 100)}% DISCOUNT WITH 90-DAY OPERATIONAL COMMITMENT.`,
     []
   )
 
   async function startCheckout(planId: PlanId) {
     const profile = loadWorkspaceProfile()
     if (!profile) {
-      const params = new URLSearchParams({
-        next: '/pricing',
-        plan: planId,
-        commitment,
-      })
+      const params = new URLSearchParams({ next: '/pricing', plan: planId, commitment })
       router.push(`/signup?${params.toString()}`)
       return
     }
@@ -88,13 +105,8 @@ export default function PricingPage() {
       })
 
       const payload = await response.json()
-      if (!response.ok) {
-        throw new Error(payload.error || 'Checkout failed')
-      }
-
-      if (payload.redirect_url) {
-        window.location.href = payload.redirect_url
-      }
+      if (!response.ok) throw new Error(payload.error || 'Checkout failed')
+      if (payload.redirect_url) window.location.href = payload.redirect_url
     } catch (error) {
       setLoadingPlan(null)
       window.alert(error instanceof Error ? error.message : 'Checkout failed')
@@ -102,41 +114,49 @@ export default function PricingPage() {
   }
 
   return (
-    <main className="page-pricing min-h-screen py-12 md:py-16">
-      <div className="shell">
-        <div className="mb-8 flex items-center justify-between gap-4">
-          <Link href="/" className="brutalist-button-muted">
+    <main className="min-h-screen pt-24 pb-16 px-4 md:px-8">
+      {/* HEADER TICKER */}
+      <div className="ticker-wrap">
+        <div className="ticker">
+          SYSTEM STATUS: OPTIMAL // {new Date().toLocaleDateString()} // ROBCOTECH PRO VERTICAL DEPLOYMENT ACTIVE // 
+          {showTickerWidget === 'weather' ? ' CURRENT WEATHER: 72°F CLEAR SKY //' : ''}
+          {showTickerWidget === 'news' ? ' GLOBAL MARKET UPDATE: TRENDING POSITIVE //' : ''}
+          OPERATIONAL EXCELLENCE SECURED //
+        </div>
+        <div className="absolute right-4 flex gap-2 bg-white pl-4">
+          <button onClick={() => setShowTickerWidget('weather')} className="hover:text-secondary"><Cloud size={18} /></button>
+          <button onClick={() => setShowTickerWidget('news')} className="hover:text-secondary"><Newspaper size={18} /></button>
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-6xl">
+        {/* NAV */}
+        <div className="mb-12 flex items-center justify-between">
+          <Link href="/" className="brutalist-button bg-white text-black">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back
+            RETURN
           </Link>
-          <Link href="/signup" className="brutalist-button">
-            Create Workspace
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Link>
+          <div className="flex gap-4">
+             <button onClick={() => setShowTickerWidget('none')} className="text-xs font-black uppercase tracking-tighter hover:underline">Clear Ticker</button>
+             <Link href="/signup" className="brutalist-button-blue">
+              INITIALIZE
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </div>
         </div>
 
-        <section className="panel overflow-hidden">
-          <div className="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
-            <div className="border-b-2 border-border p-8 lg:border-b-0 lg:border-r-2 lg:p-10">
-              <p className="display-kicker">{isDigitalItGirl ? 'Digital IT Girl Packages' : isEcom ? 'Ecom Packages' : isMedia ? 'Media Packages' : isStaffing ? 'Staffing Packages' : isStudio ? 'Studio Packages' : 'SaaS Packages'}</p>
-              <h1 className="display-title mt-4">
-                {isDigitalItGirl ? 'Choose the predictive niche bundle.' : isEcom ? 'Choose the Ecommerce operating bundle.' : isMedia ? 'Choose the Media operating bundle.' : isStaffing ? 'Choose the Staffing operating bundle.' : isStudio ? 'Choose the Studio operating bundle.' : 'Choose the SaaS operating bundle.'}
-              </h1>
-              <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground">
-                {isDigitalItGirl
-                  ? 'Pick the coverage level for segment scoring, market research synthesis, and product gap control.'
-                  : isEcom
-                  ? 'Pick the coverage level for demand, inventory, multi-channel revenue, and margins.'
-                  : isMedia
-                  ? 'Pick the coverage level for content revenue, audience growth, distribution, and retention.'
-                  : isStaffing
-                  ? 'Pick the coverage level for candidate pipelines, placement velocity, margins, and reporting.'
-                  : isStudio
-                  ? 'Pick the coverage level for project velocity, delivery posture, and team utilization.'
-                  : 'Pick the coverage level for pipeline, onboarding, revenue, and board work.'}
+        {/* HERO SECTION */}
+        <section className="brutalist-card mb-12">
+          <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+            <div>
+              <p className="font-black text-secondary uppercase tracking-[0.2em]">{getVerticalTitle()}</p>
+              <h1 className="mt-6 text-5xl md:text-7xl">{getVerticalHero()}</h1>
+              <p className="mt-8 max-w-2xl text-lg font-bold leading-relaxed text-muted-foreground">
+                Formalize your operating environment with high-integrity data lanes, 
+                automated resource coordination, and institutional oversight.
               </p>
 
-              <div className="mt-8 grid gap-4 md:grid-cols-2">
+              <div className="mt-10 grid gap-4 md:grid-cols-2">
                 {commitmentOptions.map((option) => {
                   const active = commitment === option.id
                   return (
@@ -144,135 +164,90 @@ export default function PricingPage() {
                       key={option.id}
                       type="button"
                       onClick={() => setCommitment(option.id)}
-                      className={`border-2 p-5 text-left ${active ? 'border-primary bg-primary/10' : 'border-border bg-background'}`}
+                      className={`border-4 p-6 text-left transition-all ${active ? 'border-black bg-primary' : 'border-black bg-white hover:bg-gray-50'}`}
                     >
-                      <p className="text-sm font-black uppercase tracking-[0.18em]">{option.label}</p>
-                      <p className="mt-3 text-sm leading-6 text-muted-foreground">{option.description}</p>
+                      <p className="text-sm font-black uppercase tracking-widest">{option.label}</p>
+                      <p className="mt-2 text-xs font-bold leading-tight opacity-80 uppercase">{option.description}</p>
                     </button>
                   )
                 })}
               </div>
-
-              <div className="mt-8 border-2 border-accent/60 bg-background p-5">
-                <p className="text-xs uppercase tracking-[0.24em] text-accent">Commitment leverage</p>
-                <p className="mt-3 text-base font-bold uppercase tracking-[0.12em]">{comparisonLine}</p>
-              </div>
             </div>
 
-            <div className="bg-card p-8 lg:p-10">
-              <p className="display-kicker">Coverage</p>
-              <div className="mt-6 space-y-4">
-                <div className="border-2 border-border bg-background p-4">
-                  <ShieldCheck className="h-5 w-5 text-primary" />
-                  <p className="mt-3 text-sm font-bold uppercase tracking-[0.16em]">{isDigitalItGirl ? 'Signal lane' : isEcom ? 'Demand lane' : isMedia ? 'Revenue lane' : isStaffing ? 'Fill rate lane' : isStudio ? 'Velocity lane' : 'Board lane'}</p>
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                    {isDigitalItGirl
-                      ? 'Audience filters, trend momentum, and community language stay current.'
-                      : isEcom
-                      ? 'Inventory, demand, multi-channel revenue, and supply risk stay current.'
-                      : isMedia
-                      ? 'Subscriptions, ad revenue, sponsorships, and distribution signals stay current.'
-                      : isStaffing
-                      ? 'Fill rates, market demand, and recruiter efficiency stay current.'
-                      : isStudio
-                      ? 'Project timelines, velocity tracking, and roadmap output stay current.'
-                      : 'Board decks, investor updates, diligence assets, and target lists stay current.'}
-                  </p>
-                </div>
-                <div className="border-2 border-border bg-background p-4">
-                  <Sparkles className="h-5 w-5 text-accent" />
-                  <p className="mt-3 text-sm font-bold uppercase tracking-[0.16em]">{isDigitalItGirl ? 'Command lane' : isMedia ? 'Distribution lane' : isStaffing ? 'Pipeline lane' : isStudio ? 'Delivery lane' : 'Revenue lane'}</p>
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                    {isDigitalItGirl
-                      ? 'Gap analysis, product direction, and monetization playbooks stay linked.'
-                      : isEcom
-                      ? 'Campaigns, order conversion, retention, and logistics stay linked.'
-                      : isMedia
-                      ? 'Content reach, growth experiments, retention, and feedback loops stay linked.'
-                      : isStaffing
-                      ? 'Pipeline velocity, placement conversion, and margin control stay linked.'
-                      : isStudio
-                      ? 'Team output, delivery milestones, and quality output stay linked.'
-                      : 'Pipeline, onboarding, retention, and finance workflows stay linked.'}
-                  </p>
-                </div>
-              </div>
+            <div className="flex flex-col justify-center border-l-0 lg:border-l-4 border-black lg:pl-10 space-y-6 pt-8 lg:pt-0">
+               <div className="bg-secondary p-6 border-4 border-black text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                  <ShieldCheck size={32} />
+                  <p className="mt-4 font-black uppercase tracking-widest">Governance Lane</p>
+                  <p className="mt-2 text-sm font-bold opacity-90 uppercase leading-tight">Institutional audit trails, compliance monitoring, and executive visibility.</p>
+               </div>
+               <div className="bg-primary p-6 border-4 border-black text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                  <Sparkles size={32} />
+                  <p className="mt-4 font-black uppercase tracking-widest">Efficiency Lane</p>
+                  <p className="mt-2 text-sm font-bold opacity-90 uppercase leading-tight">Automated throughput optimization and resource allocation frameworks.</p>
+               </div>
             </div>
           </div>
         </section>
 
-        <section className="mt-8 grid gap-6 lg:grid-cols-2">
+        {/* PRICING GRID */}
+        <section className="grid gap-8 lg:grid-cols-2">
           {activePlans.map((plan) => {
             const quarterlyEffective = getQuarterlyEffectiveMonthly(plan.price)
             const quarterlyTotal = getQuarterlyUpfrontTotal(plan.price)
             const active = loadingPlan === plan.id
 
             return (
-              <article key={plan.id} className={`panel p-8 ${plan.borderClass}`}>
-                <p className="display-kicker">{plan.name}</p>
-                <div className="mt-5 border-2 border-border bg-background p-5">
-                  <p className={`text-3xl font-black md:text-4xl ${plan.accentClass}`}>{formatCurrency(plan.price)}</p>
-                  <p className="mt-2 text-sm uppercase tracking-[0.24em] text-muted-foreground">month to month</p>
-                  {commitment === 'quarterly' ? (
-                    <>
-                      <p className="mt-5 text-xl font-black text-foreground">{formatCurrency(quarterlyEffective)} / month effective</p>
-                      <p className="mt-2 text-sm uppercase tracking-[0.2em] text-accent">
-                        {formatCurrency(quarterlyTotal)} billed upfront for 3 months
+              <article key={plan.id} className="brutalist-card flex flex-col">
+                <p className="text-sm font-black text-secondary uppercase tracking-[0.2em]">{plan.name}</p>
+                <div className="mt-6 border-4 border-black bg-gray-100 p-8">
+                  <p className="text-6xl font-black text-black">{formatCurrency(plan.price)}</p>
+                  <p className="mt-2 font-bold uppercase tracking-widest text-muted-foreground">Standard Monthly</p>
+                  {commitment === 'quarterly' && (
+                    <div className="mt-6 pt-6 border-t-2 border-black/10">
+                      <p className="text-2xl font-black text-secondary">{formatCurrency(quarterlyEffective)} / EFF. MONTHLY</p>
+                      <p className="text-xs font-black uppercase tracking-widest text-primary mt-1">
+                        {formatCurrency(quarterlyTotal)} BILLED UPFRONT (90 DAYS)
                       </p>
-                    </>
-                  ) : null}
+                    </div>
+                  )}
                 </div>
 
-                <p className="mt-6 text-sm leading-6 text-muted-foreground">{plan.narrative}</p>
-                <p className="mt-4 text-xs font-bold uppercase tracking-[0.22em] text-accent">
-                  {plan.id === 'core'
-                    ? isDigitalItGirl
-                      ? 'Best for operators validating one niche thesis at a time.'
-                      : isEcom
-                      ? 'Best for single-channel stores and early scale.'
-                      : isMedia
-                      ? 'Best for content creators and lean media teams.'
-                      : isStaffing
-                      ? 'Best for recruiters and early scale staffing agencies.'
-                      : isStudio
-                      ? 'Best for studios managing one project at a time.'
-                      : 'Best for active fundraising and early scale.'
-                    : isDigitalItGirl
-                      ? 'Best for teams turning niche research into repeatable launches.'
-                      : isEcom
-                      ? 'Best for multi-channel scaling and supply control.'
-                      : isMedia
-                      ? 'Best for media companies scaling distribution and sponsorship.'
-                      : isStaffing
-                      ? 'Best for agencies scaling candidate placement and margin control.'
-                      : isStudio
-                      ? 'Best for studios scaling delivery teams and project volume.'
-                      : 'Best for investor pressure and executive control.'}
-                </p>
-
-                <ul className="mt-6 space-y-4">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex gap-3 text-sm leading-6 text-foreground">
-                      <Check className={`mt-1 h-4 w-4 ${plan.accentClass}`} />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="mt-8 flex-grow">
+                  <p className="text-xs font-black uppercase tracking-widest text-primary mb-6">{comparisonLine}</p>
+                  <ul className="space-y-4">
+                    {plan.features.map((feature) => (
+                      <li key={feature} className="flex gap-3 text-sm font-bold uppercase tracking-tighter">
+                        <Check className="h-5 w-5 text-secondary flex-shrink-0" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
                 <button
                   type="button"
-                  className="brutalist-button mt-8 w-full"
+                  className="brutalist-button w-full mt-10"
                   onClick={() => void startCheckout(plan.id)}
                   disabled={active}
                 >
-                  {active ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                  {active ? 'Opening Stripe' : plan.cta}
+                  {active ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : null}
+                  {active ? 'SYNCING STRIPE...' : plan.cta.toUpperCase()}
                 </button>
               </article>
             )
           })}
         </section>
+
+        {/* FOOTER MESSAGE */}
+        <div className="mt-16 text-center">
+           <p className="font-black text-xs uppercase tracking-[0.5em] opacity-40">RobcoTech Pro Infrastructure // All Lanes Active</p>
+        </div>
       </div>
+
+      {/* FLOATING ACTION BUTTON */}
+      <button className="fab group" title="Support Command">
+        <MessageSquare className="group-hover:rotate-12 transition-transform" />
+      </button>
     </main>
   )
 }
