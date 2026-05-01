@@ -6,12 +6,14 @@ const monoton = Monoton({
   weight: '400',
   subsets: ['latin'],
   variable: '--font-monoton',
+  display: 'swap',
 })
 
 const roboto = Roboto({
-  weight: ['400', '700', '900'],
+  weight: ['400', '700'],
   subsets: ['latin'],
   variable: '--font-roboto',
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
