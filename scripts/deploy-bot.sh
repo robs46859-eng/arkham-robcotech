@@ -13,10 +13,16 @@ echo "🚀 Starting Arkham Azure Deployment for $APP_DOMAIN..."
 
 # 1. Login (Handled by orchestrator or assume existing session)
 # 2. Get ACR Credentials
-echo "🔑 Retrieving ACR credentials and logging in..."
-ACR_PASSWORD=$(az acr credential show --name "$ACR_NAME" --query "passwords[0].value" -o tsv)
-ACR_USER=$(az acr credential show --name "$ACR_NAME" --query "username" -o tsv)
-echo "$ACR_PASSWORD" | docker login "${ACR_NAME}.azurecr.io" -u "$ACR_USER" --password-stdin
+echo "🔑 Attempting ACR login..."
+# Retrieve credentials safely
+ACR_PASSWORD=$(az acr credential show --name "$ACR_NAME" --query "passwords[0].value" -o tsv 2>/dev/null || echo "")
+ACR_USER=$(az acr credential show --name "$ACR_NAME" --query "username" -o tsv 2>/dev/null || echo "")
+
+if [ -n "$ACR_PASSWORD" ]; then
+    echo "$ACR_PASSWORD" | docker login "${ACR_NAME}.azurecr.io" -u "$ACR_USER" --password-stdin 2>/dev/null || echo "⚠️ Docker login failed, attempting to continue..."
+else
+    echo "⚠️ Could not retrieve ACR credentials from Azure CLI. Assuming you are already logged in to Docker."
+fi
 
 # 3. Build and Push (Surgical: only Core Gateway and Web for now)
 services=("gateway" "web" "arkham" "orchestration" "memory" "semantic-cache" "billing" "media-commerce" "bim-ingestion")
