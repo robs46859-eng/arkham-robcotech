@@ -1417,9 +1417,38 @@ class FlowRegistry:
             ],
         ))
 
+        # Studio Delivery Posture Flow
+        self.register(FlowDefinition(
+            flow_type="studio_delivery_posture",
+            description="Audit studio delivery posture and project velocity",
+            steps=[
+                FlowStep(
+                    name="measure_velocity",
+                    task_type="studio-project-velocity",
+                    config={},
+                    timeout=60,
+                    retries=2,
+                ),
+                FlowStep(
+                    name="audit_posture",
+                    task_type="studio-delivery-posture",
+                    config={},
+                    timeout=60,
+                    retries=2,
+                ),
+                FlowStep(
+                    name="summarize_findings",
+                    task_type="model_inference",
+                    config={"model_tier": "mid", "task": "studio_posture_summary"},
+                    timeout=90,
+                    retries=2,
+                ),
+            ],
+        ))
+
         # Studio Project Velocity Flow
         self.register(FlowDefinition(
-            flow_type="studio-project-velocity",
+            flow_type="studio_project_velocity",
             description="Track studio project delivery velocity",
             steps=[
                 FlowStep(
@@ -1429,20 +1458,62 @@ class FlowRegistry:
                     timeout=60,
                     retries=2,
                 ),
+                FlowStep(
+                    name="analyze_trends",
+                    task_type="model_inference",
+                    config={"model_tier": "cheap", "task": "velocity_trend_analysis"},
+                    timeout=60,
+                    retries=2,
+                ),
             ],
         ))
 
-        # Studio Delivery Posture Flow
+        # Arkham Project Review Flow
         self.register(FlowDefinition(
-            flow_type="studio-delivery-posture",
-            description="Audit studio delivery posture",
+            flow_type="arkham_project_review",
+            description="Autonomous multi-agent review of Arkham project",
             steps=[
                 FlowStep(
-                    name="run_audit",
-                    task_type="studio-delivery-posture",
-                    config={},
+                    name="analyze_codebase",
+                    task_type="project_code_analysis",
+                    config={"audit_type": "full"},
+                    timeout=600,
+                    retries=1,
+                ),
+                FlowStep(
+                    name="security_audit",
+                    task_type="security_audit",
+                    config={"deep_scan": True},
+                    timeout=300,
+                    retries=2,
+                ),
+                FlowStep(
+                    name="policy_compliance",
+                    task_type="policy_enforcement",
+                    config={"standard": "arkham_v1"},
                     timeout=60,
                     retries=2,
+                ),
+                FlowStep(
+                    name="generate_review_summary",
+                    task_type="model_inference",
+                    config={
+                        "model_tier": "premium",
+                        "task": "project_review_synthesis",
+                    },
+                    timeout=180,
+                    retries=2,
+                ),
+                FlowStep(
+                    name="store_review_artifact",
+                    task_type="artifact_storage",
+                    config={
+                        "storage": "database",
+                        "record_type": "project_review",
+                        "path_template": "reviews/arkham/{timestamp}.json",
+                    },
+                    timeout=60,
+                    retries=3,
                 ),
             ],
         ))

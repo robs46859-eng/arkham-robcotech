@@ -185,6 +185,26 @@ func run(cmd *cobra.Command, args []string) error {
 	apiV1.HandleFunc("/maternal/verify", v1.HandleMaternalVerification).Methods("POST")
 	apiV1.HandleFunc("/maternal/journey", v1.HandlePregnancyJourney).Methods("POST")
 
+	// Studio endpoints (Vertical Integration)
+	apiV1.HandleFunc("/studio/delivery-posture", v1.HandleStudioDeliveryPosture).Methods("POST")
+	apiV1.HandleFunc("/studio/project-velocity", v1.HandleStudioProjectVelocity).Methods("POST")
+
+	// SaaS endpoints
+	apiV1.HandleFunc("/saas/budget-variance", v1.HandleSaaSBudgetVariance).Methods("POST")
+	apiV1.HandleFunc("/saas/board-deck", v1.HandleSaaSBoardDeck).Methods("POST")
+
+	// Ecommerce endpoints
+	apiV1.HandleFunc("/ecom/inventory", v1.HandleEcomInventory).Methods("POST")
+	apiV1.HandleFunc("/ecom/signals", v1.HandleEcomSignals).Methods("POST")
+
+	// Staffing endpoints
+	apiV1.HandleFunc("/staffing/audit", v1.HandleStaffingAudit).Methods("POST")
+	apiV1.HandleFunc("/staffing/velocity", v1.HandleStaffingVelocity).Methods("POST")
+
+	// Additional Media endpoints
+	apiV1.HandleFunc("/media/velocity", v1.HandleMediaVelocity).Methods("POST")
+	apiV1.HandleFunc("/media/epc", v1.HandleMediaEPC).Methods("POST")
+
 	// Create server
 	addr := fmt.Sprintf("%s:%d", host, port)
 	srv := &http.Server{
