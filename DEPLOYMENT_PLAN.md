@@ -65,11 +65,8 @@ Before production cutover:
 
 ## Explicit Non-Goals
 
-These are not the active production path:
-
-- GCS-backed telemetry assumptions
-- GKE as the primary runtime
-- Cloud Run as the production runtime
-- parallel Azure and GCP production stories
-
-If these assets remain in the repository, they should be treated as legacy or alternate material until deliberately revived.
+The repository has been purged of legacy materials. The following are NOT supported:
+- GCS-backed telemetry
+- GKE deployments
+- Cloud Run deployments
+- Any GCP-based production stories

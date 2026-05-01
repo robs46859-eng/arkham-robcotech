@@ -2,7 +2,7 @@
 
 **Generated:** 2026-04-28  
 **Status:** ✅ PRODUCTION LIVE  
-**Domain:** stelar.host  
+**Domain:** robcotech.pro  
 **Graph:** 2290 nodes, 5030 edges, 105 communities
 
 ---
@@ -35,13 +35,13 @@ FullStackArkham is a modular AI operating system with 10 autonomous agents (8 ve
 
 | Service | Status | Port | URL |
 |---------|--------|------|-----|
-| Gateway | ✅ Live | 8080 | https://api.stelar.host |
-| Arkham | ✅ Live | 8081 | https://api.stelar.host/arkham |
-| Orchestration | ✅ Live | 8083 | https://api.stelar.host/orchestration |
-| Memory | ✅ Live | 8085 | https://api.stelar.host/memory |
-| Semantic Cache | ✅ Live | 8084 | https://api.stelar.host/cache |
-| Billing | ✅ Live | 8086 | https://api.stelar.host/billing |
-| Media-Commerce | ✅ Live | 8087 | https://api.stelar.host/media |
+| Gateway | ✅ Live | 8080 | https://api.robcotech.pro |
+| Arkham | ✅ Live | 8081 | https://api.robcotech.pro/arkham |
+| Orchestration | ✅ Live | 8083 | https://api.robcotech.pro/orchestration |
+| Memory | ✅ Live | 8085 | https://api.robcotech.pro/memory |
+| Semantic Cache | ✅ Live | 8084 | https://api.robcotech.pro/cache |
+| Billing | ✅ Live | 8086 | https://api.robcotech.pro/billing |
+| Media-Commerce | ✅ Live | 8087 | https://api.robcotech.pro/media |
 
 ### Agents (10/10 Operational)
 
@@ -173,10 +173,10 @@ Based on graph analysis:
 ### Azure Resources
 
 ```
-Resource Group: stelar-rg
+Resource Group: fullstackarkham-prod
 Location: centralus (or eastus based on availability)
 
-Container Apps Environment: stelar-env
+Container Apps Environment: fullstackarkham-env
 ├── fullstackarkham-gateway (8080)
 ├── fullstackarkham-arkham (8081)
 ├── fullstackarkham-orchestration (8083)
@@ -185,14 +185,14 @@ Container Apps Environment: stelar-env
 ├── fullstackarkham-billing (8086)
 └── fullstackarkham-media-commerce (8087)
 
-Container Registry: stelaracr
+Container Registry: fullstackarkhamacr
 └── 7 services (gateway, arkham, orchestration, memory, semantic-cache, billing, media-commerce)
 
-Database: stelar-postgres (PostgreSQL 16 Flexible Server)
+Database: arkham-psql (PostgreSQL 16 Flexible Server)
 └── Database: fullstackarkham
     └── Tables: tenants, users, api_keys, events, tasks, ledger, workflows, semantic_cache, memory_notes, arkham_events
 
-Cache: stelar-redis (Redis Basic)
+Cache: arkham-redis (Redis Basic)
 └── Used for: Semantic cache, task queues, rate limiting
 ```
 
@@ -295,18 +295,18 @@ python3 services/media-commerce/tests/test_live_e2e_all_verticals.py
 
 # 3. Deploy
 ./scripts/auto_deploy_agent.py
-# Wait for: "DEPLOYMENT COMPLETE - stelar.host IS LIVE!"
+# Wait for: "DEPLOYMENT COMPLETE - robcotech.pro IS LIVE!"
 ```
 
 ### Post-Deployment Validation
 
 ```bash
 # Health checks
-curl https://api.stelar.host/health
-curl https://api.stelar.host/orchestration/health
+curl https://api.robcotech.pro/health
+curl https://api.robcotech.pro/orchestration/health
 
 # Test an agent
-curl -X POST https://api.stelar.host/api/v1/leads/route \
+curl -X POST https://api.robcotech.pro/api/v1/leads/route \
   -H "Content-Type: application/json" \
   -d '{"tenant_id":"test","lead_id":"test-1","intent_signals":["Shopify optimization"]}'
 ```
@@ -317,12 +317,12 @@ curl -X POST https://api.stelar.host/api/v1/leads/route \
 # Stop gateway
 az containerapp stop \
   --name fullstackarkham-gateway \
-  --resource-group stelar-rg
+  --resource-group fullstackarkham-prod
 
 # Rollback to previous revision
 az containerapp revision rollback \
   --name fullstackarkham-gateway \
-  --resource-group stelar-rg \
+  --resource-group fullstackarkham-prod \
   --revision-name [previous-revision]
 ```
 
@@ -338,14 +338,14 @@ az containerapp revision rollback \
 | `cycle4_5_compounding_memory.md` | ContentEngine + ChiefPulse (74 tests, 19 executors) |
 | `cycle6_compounding_memory.md` | ComplianceGate hardened (74 tests, 25 executors) |
 | `cycle7_compounding_memory.md` | BudgetMind + digital twin (74 tests, 31 executors) |
-| `cycle8_10_compounding_memory.md` | BoardReady + Debug Agent + stelar.host LIVE (108 tests, 36 executors) |
+| `cycle8_10_compounding_memory.md` | BoardReady + Debug Agent + robcotech.pro LIVE (108 tests, 36 executors) |
 
 ---
 
 ## Next Actions
 
 ### Immediate (Today)
-- [ ] Configure DNS at Hostinger (A records for stelar.host)
+- [ ] Configure DNS at Hostinger (A records for robcotech.pro)
 - [ ] Verify SSL certificates provisioned
 - [ ] Test public accessibility
 
@@ -371,9 +371,9 @@ az containerapp revision rollback \
 | **Debug Agent Log** | `/Users/joeiton/Desktop/FullStackArkham/deploy_agent.log` |
 | **Graph Report** | `graphify-out/GRAPH_REPORT.md` |
 | **Compounding Memory** | `.qwen/projects/-Users-joeiton-Desktop-FullStackArkham/memory/` |
-| **Azure Portal** | https://portal.azure.com → Resource Group: stelar-rg |
+| **Azure Portal** | https://portal.azure.com → Resource Group: fullstackarkham-prod |
 | **Stripe Dashboard** | https://dashboard.stripe.com |
-| **Hostinger DNS** | https://hpanel.hostinger.com → stelar.host → DNS |
+| **Hostinger DNS** | https://hpanel.hostinger.com → robcotech.pro → DNS |
 
 ---
 

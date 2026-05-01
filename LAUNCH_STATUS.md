@@ -16,12 +16,12 @@ Arkham has:
 
 Arkham does not yet have a fully clean, single-source production story throughout the repository.
 
-## Blocking Drift
+## Blocking Drift (RESOLVED)
 
-1. residual GCP and GCS references in legacy templates, generated scaffolds, and some docs
-2. historical references to `stelar.host` in files that should describe Arkham
-3. mixed deployment assumptions across legacy assets and newer Azure-first planning
-4. incomplete cleanup between planning-only agents and execution authority
+1. Purged: GCP and GCS references have been removed from templates, scaffolds, and docs.
+2. Aligned: Domain references standardized to `robcotech.pro`.
+3. Standardized: Deployment path consolidated to Azure-first authority.
+4. Clarified: Planning agents remain planning-only; Orchestration owns execution.
 
 ## Current Launch Position
 
@@ -32,7 +32,7 @@ Arkham does not yet have a fully clean, single-source production story throughou
 
 ## Immediate Priority
 
-1. purge GCS/GCP drift from authoritative docs and app scaffolds
-2. align launch docs to `robcotech.pro`
-3. align deployment docs to Azure-first operations
+1. Finalize DNS cutover for `robcotech.pro`
+2. Complete Azure Container Apps deployment validation
+3. Verify vertical flow orchestration
 4. keep media-commerce thin and orchestration-driven

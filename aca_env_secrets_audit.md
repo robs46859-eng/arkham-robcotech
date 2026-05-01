@@ -1,6 +1,6 @@
 # ACA Env/Secrets Audit
 
-- `.env.production` exists at `/Users/joeiton/Desktop/gemini428ew/arkham/.env.production`.
+- `.env.production` exists at `/Users/joeiton/Desktop/arkham-robcotech/.env.production`.
 - `.env.production` currently looks like a template, not a live secret source.
 - `scripts/launch.sh` is deprecated; the supported Azure flow is `scripts/deploy-bot.sh` with Key Vault-backed secret storage.
 - Service settings default many production connections to `localhost`, so ACA env wiring is mandatory.

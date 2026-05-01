@@ -190,7 +190,7 @@ class AutoDeployAgent:
                 # Phase 3: Deploy
                 if self.deploy():
                     self.log("\n" + "=" * 60, "SUCCESS")
-                    self.log(" DEPLOYMENT COMPLETE - stelar.host IS LIVE!", "SUCCESS")
+                    self.log(" DEPLOYMENT COMPLETE - robcotech.pro IS LIVE!", "SUCCESS")
                     self.log("=" * 60 + "\n", "SUCCESS")
                     
                     # Final validation

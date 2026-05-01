@@ -6,10 +6,9 @@
 
 ## Immediate Priorities
 
-1. finish Azure-first documentation cleanup
-2. remove or neutralize legacy GCS and GCP assumptions
-3. validate local stack and orchestration health
-4. confirm production env and secret ownership
+1. Finalize DNS records for `robcotech.pro`
+2. Validate local stack and orchestration health
+3. confirm production env and secret ownership
 
 ## Pre-Cutover Validation
 
@@ -40,7 +39,6 @@ Minimum checks:
 
 ## Do Not Launch If
 
-- docs still point operators to a competing platform path
 - critical services fail health checks
 - worker or queue behavior is unstable
 - media-commerce depends on local workflow logic outside orchestration

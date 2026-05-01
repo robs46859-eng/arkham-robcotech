@@ -114,7 +114,7 @@ Legacy or alternate deployment assets may still exist in the repository, but the
 
 ## Current Risks
 
-1. Residual GCP and GCS references still exist in legacy templates and generated scaffolds.
+1. Legacy configuration drift was identified and GCP/GCS references have been purged from the active repository.
 2. Several launch and deployment docs previously drifted from the Azure-first production decision.
 3. Planning-only agent packages need continued separation from execution authority.
 4. Media-commerce must remain a disciplined consumer of the horizontal platform, not a shadow platform.

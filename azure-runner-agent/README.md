@@ -27,7 +27,7 @@ Before you begin, ensure you have:
 ## What It Does
 
 - Reads the Arkham deployment contract from local repo docs and scripts
-- Detects deployment drift such as stale `stelar.host` or GCP-era config
+- Detects deployment drift such as stale `robcotech.pro` or GCP-era config
 - Plans exact repo-scoped deployment actions around `./scripts/deploy-bot.sh`
 - Runs only allowlisted repo commands, with explicit approval required for mutating actions
 

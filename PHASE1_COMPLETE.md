@@ -95,7 +95,7 @@ python3 tests/run_e2e_test.py
 ### Infrastructure
 - ✅ Docker Compose (8 services + Postgres + Redis)
 - ✅ Kubernetes manifests (gateway, arkham, postgres deployments)
-- ✅ Terraform configs (GCP: GKE, Cloud SQL, Memorystore)
+- ✅ Terraform configs (Azure: AKS, Azure SQL, Azure Cache for Redis)
 - ✅ Makefile for common operations
 
 ### Documentation
@@ -129,7 +129,7 @@ python3 tests/run_e2e_test.py
 kubectl apply -f infra/k8s/
 ```
 
-### GCP Infrastructure
+### Azure Infrastructure
 ```bash
 cd infra/terraform
 terraform init

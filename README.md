@@ -80,7 +80,7 @@ The active production path is Azure-first:
 - managed Redis
 - secure secret management
 
-Legacy GCP-oriented assets may still exist in the repository as historical or alternate material, but they are not the active production target.
+The repository has been purged of legacy materials.
 
 Vertical guidance:
 

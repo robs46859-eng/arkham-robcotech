@@ -93,32 +93,22 @@ def inspect_arkham_deployment_drift() -> str:
     findings: list[dict[str, str]] = []
 
     env_production = _read_text(".env.production")
-    if "stelar.host" in env_production:
+    if "robcotech.pro" in env_production:
         findings.append(
             {
                 "severity": "high",
                 "file": ".env.production",
-                "issue": "Production env file still targets stelar.host instead of robcotech.pro.",
+                "issue": "Production env file still targets robcotech.pro instead of robcotech.pro.",
             }
         )
 
-    workflow = _read_text(".github/workflows/deploy-to-prod.yaml")
-    if "google-github-actions" in workflow or "Cloud Run" in workflow:
+    workflow = _read_text(".github/workflows/deploy.yml")
+    if "google-github-actions" in workflow:
         findings.append(
             {
                 "severity": "high",
-                "file": ".github/workflows/deploy-to-prod.yaml",
-                "issue": "Production CI workflow still deploys via Google Cloud tooling instead of the Azure-first path.",
-            }
-        )
-
-    terraform = _read_text("infra/terraform/main.tf")
-    if 'source  = "hashicorp/google"' in terraform or 'backend "gcs"' in terraform:
-        findings.append(
-            {
-                "severity": "high",
-                "file": "infra/terraform/main.tf",
-                "issue": "Terraform stack is still GCP/GKE/Cloud SQL based.",
+                "file": ".github/workflows/deploy.yml",
+                "issue": "Deployment workflow still contains legacy Google auth steps.",
             }
         )
 

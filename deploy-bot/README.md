@@ -1,4 +1,4 @@
-# Azure Deploy Bot for FullStackArkham on stelar.host
+# Azure Deploy Bot for FullStackArkham on robcotech.pro
 
 Automated deployment bot for Azure Container Apps.
 
@@ -91,7 +91,7 @@ Set these in Azure Key Vault or as App Settings:
 
 ```bash
 # Domain
-APP_DOMAIN=stelar.host
+APP_DOMAIN=robcotech.pro
 
 # Stripe (Live)
 STRIPE_SECRET_KEY=sk_live_...
@@ -147,7 +147,7 @@ MEDIA_COMMERCE_URL=http://media-commerce:8087
 ┌─────────────────────────────────────────────────────────┐
 │  5. VERIFY                                              │
 │     ✓ Health check all endpoints                        │
-│     ✓ Verify DNS (stelar.host)                          │
+│     ✓ Verify DNS (robcotech.pro)                          │
 │     ✓ Test Stripe webhook                               │
 └─────────────────────────────────────────────────────────┘
                            ↓
@@ -200,9 +200,9 @@ If deployment fails:
 
 | Service | URL |
 |---------|-----|
-| **Frontend** | https://stelar.host |
-| **Gateway API** | https://api.stelar.host/v1 |
-| **Billing Webhooks** | https://api.stelar.host/api/v1/billing/webhook |
+| **Frontend** | https://robcotech.pro |
+| **Gateway API** | https://api.robcotech.pro/v1 |
+| **Billing Webhooks** | https://api.robcotech.pro/api/v1/billing/webhook |
 | **Application Insights** | Azure Portal → Monitor → Application Insights |
 
 ---

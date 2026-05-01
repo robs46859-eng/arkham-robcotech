@@ -30,7 +30,7 @@ class Settings(BaseSettings):
     stripe_yearly_discount_percent: int = 43  # Default discount for yearly
     
     # Domain
-    domain: str = os.getenv("APP_DOMAIN", "stelar.host")
+    domain: str = os.getenv("APP_DOMAIN", "robcotech.pro")
     
     pricing_core_monthly: int = 7599
     pricing_executive_monthly: int = 12599

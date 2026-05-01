@@ -1,4 +1,4 @@
-# Stripe Setup for stelar.host
+# Stripe Setup for robcotech.pro
 
 ## Quick Setup (5 minutes)
 
@@ -18,7 +18,7 @@ nano services/billing/.env
 
 ```bash
 # Domain
-APP_DOMAIN=stelar.host
+APP_DOMAIN=robcotech.pro
 
 # Stripe API Keys (from https://dashboard.stripe.com/apikeys)
 STRIPE_SECRET_KEY=sk_test_YOUR_KEY_HERE
@@ -62,7 +62,7 @@ Stripe will handle the monthly/yearly toggle automatically in checkout.
 
 2. **Endpoint URL**:
    - For local dev: Use Stripe CLI (see below)
-   - For production: `https://stelar.host/api/v1/billing/webhook`
+   - For production: `https://robcotech.pro/api/v1/billing/webhook`
 
 3. **Events to send**:
    - ☑ `checkout.session.completed`
@@ -186,7 +186,7 @@ Then visit `http://localhost:3000/pricing` and click a plan.
 
 ---
 
-## Production (stelar.host)
+## Production (robcotech.pro)
 
 When ready for production:
 
@@ -202,7 +202,7 @@ When ready for production:
    ```
 
 3. **Create Production Webhook**:
-   - URL: `https://stelar.host/api/v1/billing/webhook`
+   - URL: `https://robcotech.pro/api/v1/billing/webhook`
    - Events: Same 5 events as above
 
 4. **Update Production Environment** with live keys

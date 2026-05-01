@@ -3,17 +3,13 @@
 
 import os
 import subprocess
-import google.auth
 from google.adk.agents import Agent
 from google.adk.apps import App
 from google.adk.models import Gemini
 from google.genai import types
 
 # --- Environment Setup ---
-_, project_id = google.auth.default()
-os.environ["GOOGLE_CLOUD_PROJECT"] = project_id
-os.environ["GOOGLE_CLOUD_LOCATION"] = "global"
-os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "True"
+# Project ID and Location resolution moved to runtime or Azure-backed alternatives.
 
 # --- OmniDeployer Tools ---
 

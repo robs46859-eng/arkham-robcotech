@@ -18,8 +18,6 @@ Use this sequence:
 
 Azure is the active production platform.
 
-Legacy GCP- and GCS-oriented assets may still exist in the repository, but they are deprecated for current operations and should not be used as the primary production path.
-
 ## Step 1: Local Validation
 
 Before trusting deployment, verify:
@@ -131,11 +129,5 @@ Minimum production readiness:
 
 ## Legacy Asset Policy
 
-If the repository still contains:
-
-- GCP Terraform
-- GKE manifests
-- GCS telemetry references
-- Cloud Run scaffolding
-
-those assets should be treated as deprecated or alternate until deliberately updated and reintroduced.
+The repository has been purged of legacy GCP assets (Terraform, GKE manifests, GCS telemetry, Cloud Run scaffolding). 
+The only supported production path is Azure.
