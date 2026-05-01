@@ -1,0 +1,87 @@
+vertical: media-commerce
+horizontal:
+  gateway:
+    path: services/gateway
+    owns:
+      - ingress
+      - auth mediation
+      - provider coordination
+  orchestration:
+    path: services/orchestration
+    owns:
+      - workflow lifecycle
+      - task dispatch
+      - checkpoints
+      - retries
+      - worker control
+  memory:
+    path: services/memory
+    owns:
+      - durable memory
+      - retrieval
+  semantic_cache:
+    path: services/semantic-cache
+    owns:
+      - repeated inference cache
+  billing:
+    path: services/billing
+    owns:
+      - subscriptions
+      - checkout
+      - billing webhooks
+  arkham_security:
+    path: services/arkham
+    owns:
+      - threat detection
+      - audit behavior
+
+vertical_layer:
+  path: services/media-commerce
+  owns:
+    - domain entities
+    - vertical APIs
+    - vertical automations
+    - policy interpretation
+  agents:
+    director:
+      role: top-level vertical coordinator
+      delegates_to:
+        - media_commerce
+        - deal_flow
+        - content_engine
+        - fulfillment_ops
+        - compliance_gate
+        - budget_mind
+        - board_ready
+        - chief_pulse
+    media_commerce:
+      path: services/media-commerce/app/agents/media_commerce.py
+      purpose: core vertical policy and optimization logic
+    deal_flow:
+      path: services/media-commerce/app/agents/deal_flow.py
+      purpose: lead routing and conversion workflows
+    content_engine:
+      path: services/media-commerce/app/agents/content_engine.py
+      purpose: content generation and scaling
+    fulfillment_ops:
+      path: services/media-commerce/app/agents/fulfillment_ops.py
+      purpose: publishing, CRO, delivery, test execution
+    compliance_gate:
+      path: services/media-commerce/app/agents/compliance_gate.py
+      purpose: guardrails and policy enforcement
+    budget_mind:
+      path: services/media-commerce/app/agents/budget_mind.py
+      purpose: margin and unit-economics control
+    board_ready:
+      path: services/media-commerce/app/agents/board_ready.py
+      purpose: reporting and investor-grade summaries
+    chief_pulse:
+      path: services/media-commerce/app/agents/chief_pulse.py
+      purpose: synthesis and escalation
+
+integration_rules:
+  - vertical workflows must execute through services/orchestration
+  - vertical state may extend SQL but must remain tenant-scoped unless explicitly global
+  - vertical memory usage must delegate storage/retrieval to services/memory
+  - vertical caching must delegate repeated inference reuse to services/semantic-cache
+  - billing-specific monetization events must integrate with services/billing

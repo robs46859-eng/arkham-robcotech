@@ -1,0 +1,266 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Arkham Sans";
+  src: url("/fonts/PTSans.ttc");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Arkham Mono";
+  src: url("/fonts/PTMono.ttc");
+  font-display: swap;
+}
+
+:root {
+  --background: 214 18% 11%;
+  --foreground: 212 24% 93%;
+  --card: 214 15% 17%;
+  --card-foreground: 212 24% 93%;
+  --popover: 214 15% 17%;
+  --popover-foreground: 212 24% 93%;
+  --primary: 24 78% 54%;
+  --primary-foreground: 213 20% 10%;
+  --secondary: 217 10% 35%;
+  --secondary-foreground: 212 24% 96%;
+  --muted: 214 12% 24%;
+  --muted-foreground: 213 16% 73%;
+  --accent: 206 72% 61%;
+  --accent-foreground: 214 18% 12%;
+  --destructive: 2 73% 60%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214 10% 44%;
+  --input: 214 10% 44%;
+  --ring: 24 78% 54%;
+  --radius: 0;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Arkham Sans", "Inter", "Segoe UI", sans-serif;
+    background-image:
+      linear-gradient(to right, rgba(120, 138, 156, 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(120, 138, 156, 0.08) 1px, transparent 1px),
+      radial-gradient(circle at top left, rgba(237, 127, 39, 0.1), transparent 26%),
+      radial-gradient(circle at 78% 14%, rgba(90, 169, 226, 0.18), transparent 28%),
+      radial-gradient(circle at bottom right, rgba(90, 169, 226, 0.14), transparent 30%);
+    background-size: 40px 40px, 40px 40px, auto, auto, auto;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Arkham Mono", "SFMono-Regular", ui-monospace, monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  a,
+  button,
+  input,
+  textarea,
+  select {
+    transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease, opacity 150ms ease;
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .panel {
+    @apply rounded-[26px] border border-border/80 bg-card shadow-[0_20px_60px_rgba(8,15,30,0.28)];
+    background-image: linear-gradient(160deg, rgba(255, 255, 255, 0.03), rgba(90, 169, 226, 0.06));
+  }
+
+  .panel-soft {
+    @apply rounded-[26px] border border-border/70 bg-card/80 backdrop-blur;
+  }
+
+  .display-kicker {
+    @apply text-[11px] uppercase tracking-[0.35em] text-accent;
+  }
+
+  .display-title {
+    @apply text-4xl font-black leading-none md:text-6xl;
+  }
+
+  .section-title {
+    @apply text-2xl font-black md:text-3xl;
+  }
+
+  .brutalist-button {
+    @apply inline-flex items-center justify-center rounded-full border border-foreground/70 bg-primary px-5 py-3 text-sm font-bold uppercase tracking-[0.2em] text-primary-foreground shadow-[0_12px_30px_rgba(90,169,226,0.25)] hover:border-accent hover:shadow-[0_14px_34px_rgba(90,169,226,0.34)];
+  }
+
+  .brutalist-button-muted {
+    @apply inline-flex items-center justify-center rounded-full border border-border bg-secondary/70 px-5 py-3 text-sm font-bold uppercase tracking-[0.2em] text-secondary-foreground hover:border-accent hover:text-foreground;
+  }
+
+  .brutalist-input {
+    @apply w-full rounded-[18px] border border-border bg-background/80 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-0;
+  }
+
+  .metric-card {
+    @apply panel min-h-[168px] p-5;
+  }
+
+  .page-home {
+    background:
+      linear-gradient(135deg, rgba(237, 127, 39, 0.09), transparent 42%),
+      linear-gradient(315deg, rgba(90, 169, 226, 0.18), transparent 54%),
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0, rgba(255, 255, 255, 0.025) 2px, transparent 2px, transparent 18px);
+  }
+
+  .page-pricing {
+    background:
+      radial-gradient(circle at 12% 18%, rgba(237, 127, 39, 0.16), transparent 22%),
+      radial-gradient(circle at 88% 28%, rgba(90, 169, 226, 0.18), transparent 24%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 40%);
+  }
+
+  .page-auth {
+    background:
+      linear-gradient(145deg, rgba(90, 169, 226, 0.14), transparent 38%),
+      linear-gradient(315deg, rgba(237, 127, 39, 0.14), transparent 40%),
+      repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 22px);
+  }
+
+  .page-success {
+    background:
+      radial-gradient(circle at top left, rgba(90, 169, 226, 0.16), transparent 20%),
+      radial-gradient(circle at bottom right, rgba(237, 127, 39, 0.16), transparent 24%);
+  }
+
+  .app-canvas {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 28%),
+      linear-gradient(90deg, rgba(237, 127, 39, 0.05), transparent 18%, transparent 68%, rgba(90, 169, 226, 0.11)),
+      linear-gradient(to right, rgba(120, 138, 156, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(120, 138, 156, 0.05) 1px, transparent 1px);
+    background-size: auto, auto, 32px 32px, 32px 32px;
+  }
+
+  .app-shell {
+    @apply grid gap-6 xl:grid-cols-[240px_minmax(0,1fr)_340px];
+  }
+
+  .app-nav {
+    @apply flex min-h-[calc(100vh-4rem)] flex-col overflow-hidden;
+  }
+
+  .app-main {
+    @apply space-y-6;
+  }
+
+  .shell-header {
+    @apply relative overflow-hidden;
+  }
+
+  .shell-header::after {
+    content: "";
+    @apply absolute inset-x-0 bottom-0 h-px bg-border/70;
+  }
+
+  .shell-header-dashboard {
+    background-image: linear-gradient(145deg, rgba(90, 169, 226, 0.16), rgba(255, 255, 255, 0.02) 45%, rgba(237, 127, 39, 0.08));
+  }
+
+  .shell-header-projects {
+    background-image: linear-gradient(145deg, rgba(90, 169, 226, 0.18), rgba(255, 255, 255, 0.015) 52%, rgba(21, 31, 53, 0.5));
+  }
+
+  .shell-header-workflows {
+    background-image: linear-gradient(145deg, rgba(237, 127, 39, 0.08), rgba(90, 169, 226, 0.16) 52%, rgba(255, 255, 255, 0.02));
+  }
+
+  .shell-header-settings {
+    background-image: linear-gradient(145deg, rgba(90, 169, 226, 0.12), rgba(255, 255, 255, 0.015) 45%, rgba(120, 138, 156, 0.16));
+  }
+
+  .shell-meta-chip {
+    @apply inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/65 px-3 py-2 text-[11px] uppercase tracking-[0.18em] text-muted-foreground;
+  }
+
+  .shell-meta-chip strong {
+    @apply text-foreground;
+    font-family: "Arkham Mono", "SFMono-Regular", ui-monospace, monospace;
+    font-weight: 700;
+  }
+
+  .project-rail {
+    @apply panel relative min-h-[calc(100vh-4rem)] overflow-hidden;
+  }
+
+  .project-rail-collapsed {
+    @apply w-[78px];
+  }
+
+  .rail-toggle {
+    @apply absolute right-3 top-3 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full border border-border bg-background text-muted-foreground hover:border-accent hover:text-foreground;
+  }
+
+  .workflow-toolbar {
+    @apply panel flex flex-col gap-4 p-5 md:flex-row md:items-center md:justify-between;
+  }
+
+  .workflow-grid {
+    @apply grid gap-6 lg:grid-cols-[0.34fr_0.66fr];
+  }
+
+  .workflow-lab {
+    @apply panel overflow-hidden;
+  }
+
+  .workflow-canvas {
+    @apply relative min-h-[480px] border-t border-border;
+    background-image:
+      linear-gradient(to right, rgba(120, 138, 156, 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(120, 138, 156, 0.08) 1px, transparent 1px),
+      radial-gradient(circle at top right, rgba(90, 169, 226, 0.12), transparent 25%);
+    background-size: 44px 44px;
+  }
+
+  .workflow-node {
+    @apply absolute w-44 rounded-[18px] border bg-card px-4 py-3 shadow-[0_16px_28px_rgba(8,15,30,0.26)];
+  }
+
+  .workflow-node-orange {
+    @apply border-primary;
+  }
+
+  .workflow-node-blue {
+    @apply border-accent;
+  }
+
+  .workflow-node-slate {
+    @apply border-border;
+  }
+
+  .workflow-connector {
+    @apply absolute h-[2px] bg-border;
+  }
+
+  .source-card {
+    @apply rounded-[22px] border border-border bg-background/80 p-5;
+  }
+
+  .status-badge {
+    @apply inline-flex rounded-full border border-border bg-background/80 px-2 py-1 text-[10px] uppercase tracking-[0.18em] text-accent;
+  }
+}

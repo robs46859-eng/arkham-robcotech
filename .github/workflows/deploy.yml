@@ -1,0 +1,228 @@
+# GitHub Actions CI/CD for FullStackArkham
+# Deploys to Azure Container Apps on push to main
+
+name: Deploy to Azure
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  RESOURCE_GROUP: fullstackarkham-prod
+  CONTAINER_APPS_ENV: fullstackarkham-env
+  ACR_NAME: fullstackarkhamacr
+  LOCATION: eastus
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: Setup Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    
+    - name: Login to Azure Container Registry
+      uses: azure/docker-login@v2
+      with:
+        login-server: ${{ env.ACR_NAME }}.azurecr.io
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+    
+    # Build and push each service
+    - name: Build and push Gateway
+      uses: docker/build-push-action@v5
+      with:
+        context: ./services/gateway
+        push: true
+        tags: |
+          ${{ env.ACR_NAME }}.azurecr.io/gateway:${{ github.sha }}
+          ${{ env.ACR_NAME }}.azurecr.io/gateway:latest
+        platforms: linux/amd64
+    
+    - name: Build and push Arkham
+      uses: docker/build-push-action@v5
+      with:
+        context: ./services/arkham
+        push: true
+        tags: |
+          ${{ env.ACR_NAME }}.azurecr.io/arkham:${{ github.sha }}
+          ${{ env.ACR_NAME }}.azurecr.io/arkham:latest
+        platforms: linux/amd64
+    
+    - name: Build and push Media Commerce
+      uses: docker/build-push-action@v5
+      with:
+        context: ./services/media-commerce
+        push: true
+        tags: |
+          ${{ env.ACR_NAME }}.azurecr.io/media-commerce:${{ github.sha }}
+          ${{ env.ACR_NAME }}.azurecr.io/media-commerce:latest
+        platforms: linux/amd64
+    
+    - name: Build and push Billing
+      uses: docker/build-push-action@v5
+      with:
+        context: ./services/billing
+        push: true
+        tags: |
+          ${{ env.ACR_NAME }}.azurecr.io/billing:${{ github.sha }}
+          ${{ env.ACR_NAME }}.azurecr.io/billing:latest
+        platforms: linux/amd64
+    
+    - name: Build and push Orchestration
+      uses: docker/build-push-action@v5
+      with:
+        context: ./services/orchestration
+        push: true
+        tags: |
+          ${{ env.ACR_NAME }}.azurecr.io/orchestration:${{ github.sha }}
+          ${{ env.ACR_NAME }}.azurecr.io/orchestration:latest
+        platforms: linux/amd64
+    
+    - name: Build and push Memory
+      uses: docker/build-push-action@v5
+      with:
+        context: ./services/memory
+        push: true
+        tags: |
+          ${{ env.ACR_NAME }}.azurecr.io/memory:${{ github.sha }}
+          ${{ env.ACR_NAME }}.azurecr.io/memory:latest
+        platforms: linux/amd64
+    
+    - name: Build and push Semantic Cache
+      uses: docker/build-push-action@v5
+      with:
+        context: ./services/semantic-cache
+        push: true
+        tags: |
+          ${{ env.ACR_NAME }}.azurecr.io/semantic-cache:${{ github.sha }}
+          ${{ env.ACR_NAME }}.azurecr.io/semantic-cache:latest
+        platforms: linux/amd64
+    
+    - name: Build and push BIM Ingestion
+      uses: docker/build-push-action@v5
+      with:
+        context: ./services/bim_ingestion
+        push: true
+        tags: |
+          ${{ env.ACR_NAME }}.azurecr.io/bim-ingestion:${{ github.sha }}
+          ${{ env.ACR_NAME }}.azurecr.io/bim-ingestion:latest
+        platforms: linux/amd64
+    
+    # Deploy to Container Apps
+    - name: Deploy Gateway
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          az containerapp update \
+            --name gateway \
+            --resource-group $RESOURCE_GROUP \
+            --image ${ACR_NAME}.azurecr.io/gateway:${{ github.sha }} \
+            || az containerapp create \
+              --name gateway \
+              --resource-group $RESOURCE_GROUP \
+              --environment $CONTAINER_APPS_ENV \
+              --image ${ACR_NAME}.azurecr.io/gateway:${{ github.sha }} \
+              --target-port 8080 \
+              --ingress external \
+              --cpu 0.25 \
+              --memory 0.5 \
+              --min-replicas 1 \
+              --max-replicas 5
+    
+    - name: Deploy Arkham
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          az containerapp update \
+            --name arkham \
+            --resource-group $RESOURCE_GROUP \
+            --image ${ACR_NAME}.azurecr.io/arkham:${{ github.sha }} \
+            || az containerapp create \
+              --name arkham \
+              --resource-group $RESOURCE_GROUP \
+              --environment $CONTAINER_APPS_ENV \
+              --image ${ACR_NAME}.azurecr.io/arkham:${{ github.sha }} \
+              --target-port 8081 \
+              --ingress external \
+              --cpu 0.25 \
+              --memory 0.5
+    
+    - name: Deploy Media Commerce
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          az containerapp update \
+            --name media-commerce \
+            --resource-group $RESOURCE_GROUP \
+            --image ${ACR_NAME}.azurecr.io/media-commerce:${{ github.sha }} \
+            || az containerapp create \
+              --name media-commerce \
+              --resource-group $RESOURCE_GROUP \
+              --environment $CONTAINER_APPS_ENV \
+              --image ${ACR_NAME}.azurecr.io/media-commerce:${{ github.sha }} \
+              --target-port 8087 \
+              --ingress external \
+              --cpu 0.25 \
+              --memory 0.5
+    
+    - name: Deploy Billing
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          az containerapp update \
+            --name billing \
+            --resource-group $RESOURCE_GROUP \
+            --image ${ACR_NAME}.azurecr.io/billing:${{ github.sha }} \
+            || az containerapp create \
+              --name billing \
+              --resource-group $RESOURCE_GROUP \
+              --environment $CONTAINER_APPS_ENV \
+              --image ${ACR_NAME}.azurecr.io/billing:${{ github.sha }} \
+              --target-port 8086 \
+              --ingress external \
+              --cpu 0.25 \
+              --memory 0.5
+    
+    # Deploy other services (similar pattern)
+    - name: Deploy remaining services
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          for service in orchestration memory semantic-cache bim-ingestion; do
+            port=""
+            case $service in
+              orchestration) port=8083 ;;
+              memory) port=8085 ;;
+              semantic-cache) port=8084 ;;
+              bim-ingestion) port=8082 ;;
+            esac
+            
+            az containerapp update \
+              --name $service \
+              --resource-group $RESOURCE_GROUP \
+              --image ${ACR_NAME}.azurecr.io/${service}:${{ github.sha }} \
+              2>/dev/null || az containerapp create \
+                --name $service \
+                --resource-group $RESOURCE_GROUP \
+                --environment $CONTAINER_APPS_ENV \
+                --image ${ACR_NAME}.azurecr.io/${service}:${{ github.sha }} \
+                --target-port $port \
+                --ingress external \
+                --cpu 0.25 \
+                --memory 0.5
+          done
+    
+    - name: Logout from Azure
+      if: always()
+      run: az logout

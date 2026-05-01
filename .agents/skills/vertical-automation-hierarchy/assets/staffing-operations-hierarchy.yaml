@@ -1,0 +1,149 @@
+vertical: staffing-operations
+objective: automate clinician or candidate sourcing, scoring, placement, onboarding, compliance review, and margin-controlled staffing delivery
+
+horizontal:
+  gateway:
+    path: services/gateway
+    owns:
+      - ingress
+      - auth mediation
+      - provider coordination
+  orchestration:
+    path: services/orchestration
+    owns:
+      - workflow lifecycle
+      - task dispatch
+      - checkpoints
+      - retries
+      - worker control
+  memory:
+    path: services/memory
+    owns:
+      - durable memory
+      - retrieval
+  semantic_cache:
+    path: services/semantic-cache
+    owns:
+      - repeated inference cache
+  billing:
+    path: services/billing
+    owns:
+      - subscriptions
+      - checkout
+      - invoice and settlement correctness
+  arkham_security:
+    path: services/arkham
+    owns:
+      - threat detection
+      - audit behavior
+
+vertical_layer:
+  service_path: services/staffing-operations
+  owns:
+    - candidate and placement domain entities
+    - staffing-specific policies
+    - staffing APIs
+    - placement and onboarding automations
+  entities:
+    - accounts
+    - leads
+    - deals
+    - placements
+    - candidates
+    - tasks
+    - events
+    - ledger
+    - policies
+  policies:
+    - credential_completeness
+    - margin_protection
+    - placement_expiry_alert
+    - manual_review_for_license_risk
+  approval_gates:
+    - placement_offer_release_above_pay_threshold
+    - contract_override
+    - compliance_exception
+  agents:
+    director:
+      role: top-level staffing vertical coordinator
+      delegates_to:
+        - deal_flow
+        - fulfillment_ops
+        - compliance_gate
+        - budget_mind
+        - chief_pulse
+        - board_ready
+    deal_flow:
+      purpose: intake, qualification, employer routing, proposal and negotiation workflows
+    fulfillment_ops:
+      purpose: onboarding, handoff, workflow completion, funnel optimization
+    compliance_gate:
+      purpose: credential, policy, and exception review workflows
+    budget_mind:
+      purpose: gross-margin enforcement, pay-package sanity checks, unit economics
+    chief_pulse:
+      purpose: exception synthesis, escalation, executive visibility
+    board_ready:
+      purpose: reporting for placement velocity, margin, and compliance posture
+
+automation_workflows:
+  - name: candidate-intake-and-score
+    trigger: new candidate or clinician profile submitted
+    orchestration_required: true
+    tasks:
+      - normalize profile
+      - score skills and fit
+      - write candidate memory notes
+      - create recruiter follow-up task
+  - name: lead-to-placement
+    trigger: employer demand or requisition created
+    orchestration_required: true
+    tasks:
+      - qualify lead
+      - score against vertical fit
+      - shortlist candidates
+      - generate placement task bundle
+  - name: compliance-review
+    trigger: credential gap, policy hit, or exception
+    orchestration_required: true
+    tasks:
+      - inspect candidate packet
+      - compare against policy
+      - escalate or clear
+  - name: placement-onboarding
+    trigger: placement confirmed
+    orchestration_required: true
+    tasks:
+      - create onboarding tasks
+      - track completion
+      - verify start readiness
+  - name: margin-watch
+    trigger: deal updated or placement economics change
+    orchestration_required: true
+    tasks:
+      - compute margin
+      - compare against threshold
+      - escalate if margin below floor
+
+integration_rules:
+  - all multi-step staffing workflows must execute through services/orchestration
+  - candidate and placement history should be delegated to services/memory for retrieval
+  - repeated scoring or matching inference should use services/semantic-cache when appropriate
+  - placement and deal monetization events must integrate with services/billing and ledger records
+  - compliance and risk signals must route through services/arkham and compliance_gate, not local ad hoc logic
+
+validation:
+  schema_checks:
+    - candidate and placement tables bootstrap cleanly
+    - seed policies remain idempotent
+  workflow_checks:
+    - candidate intake creates orchestration tasks
+    - placement onboarding resumes from checkpoints
+    - compliance exceptions escalate correctly
+  runtime_checks:
+    - staffing service env wiring resolves gateway and orchestration URLs
+    - deploy-bot resume SQL handles partial bootstrap safely
+  business_outcome_checks:
+    - placements move through explicit states
+    - low-margin deals trigger review
+    - compliance gaps create human approval tasks

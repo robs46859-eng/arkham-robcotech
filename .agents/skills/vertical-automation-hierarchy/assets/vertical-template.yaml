@@ -1,0 +1,44 @@
+vertical: <vertical-name>
+objective: <what the vertical automates>
+
+horizontal_contract:
+  gateway:
+    endpoints: []
+    provider_calls: []
+  orchestration:
+    workflows: []
+    task_seams: []
+  memory:
+    retrieval_patterns: []
+  semantic_cache:
+    cacheable_inference_paths: []
+  billing:
+    monetization_paths: []
+  arkham_security:
+    audit_or_policy_hooks: []
+
+vertical_layer:
+  service_path: services/<vertical-service>
+  entities: []
+  policies: []
+  approval_gates: []
+  agents:
+    director:
+      role: vertical coordinator
+      delegates_to: []
+    domain_agents: []
+
+build_phases:
+  - scope
+  - contract
+  - data
+  - automation
+  - agent_layer
+  - runtime
+  - validation
+
+validation:
+  schema_checks: []
+  workflow_checks: []
+  runtime_checks: []
+  business_outcome_checks: []

@@ -1,0 +1,63 @@
+# Gateway Service
+services/gateway/bin/
+services/gateway/gateway
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv
+venv/
+ENV/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Graphify outputs (keep reports, skip heavy files)
+graphify-out/cache/
+graphify-out/manifest.json
+graphify-out/cost.json
+
+# Node modules (for web app)
+apps/web/node_modules/
+apps/web/.next/
+apps/web/out/
+apps/web/.runtime-data/
+services/billing/.env
