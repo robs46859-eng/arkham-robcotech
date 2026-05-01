@@ -41,127 +41,133 @@ const outcomes = isDigitalItGirl
       'Utilization watch stays surfaced.',
     ]
   : [
-      'Board material stays current.',
-      'Pipeline stays in view.',
-      'Churn risk stays surfaced.',
+      'Compliance reporting stays current.',
+      'Operational pipeline stays in view.',
+      'Market risk stays surfaced.',
     ]
 
 export default function Home() {
   return (
     <main className="page-home min-h-screen pb-16">
-      <header className="border-b-2 border-border bg-card/95">
+      <header className="border-b-4 border-black bg-white">
         <div className="shell flex flex-col gap-6 py-6 md:flex-row md:items-center md:justify-between">
           <Link href="/" className="flex items-start gap-4">
-            <div className="flex h-14 w-14 items-center justify-center border-2 border-foreground bg-primary text-primary-foreground shadow-[6px_6px_0_rgba(90,169,226,0.35)]">
+            <div className="flex h-14 w-14 items-center justify-center border-4 border-black bg-primary text-black shadow-[4px_4px_0_rgba(0,0,0,1)]">
               <FileStack className="h-7 w-7" />
             </div>
             <div>
-              <p className="display-kicker">RobcoTech Pro</p>
-              <h1 className="text-2xl font-black">
-                {isDigitalItGirl ? 'Digital IT Girl Systems' : isEcom ? 'Ecom Founder Systems' : isMedia ? 'Media Founder Systems' : isStaffing ? 'Staffing Founder Systems' : isStudio ? 'Studio Systems' : 'SaaS Founder Systems'}
+              <p className="font-black text-secondary uppercase tracking-[0.2em] text-[10px]">RobcoTech Pro</p>
+              <h1 className="text-2xl font-black uppercase tracking-tighter">
+                {isDigitalItGirl ? 'Market Intelligence Systems' : isEcom ? 'Omni-channel Commerce Systems' : isMedia ? 'Content Yield Systems' : isStaffing ? 'Placement Throughput Systems' : isStudio ? 'Delivery Standard Systems' : 'Operational Control Systems'}
               </h1>
             </div>
           </Link>
 
-          <nav className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.25em] text-muted-foreground">
-            <a href="#offer" className="hover:text-foreground">Offer</a>
-            <a href="#systems" className="hover:text-foreground">Systems</a>
-            <Link href="/pricing" className="hover:text-foreground">Pricing</Link>
-            <Link href="/login" className="hover:text-foreground">Login</Link>
-            <Link href="/signup" className="brutalist-button">Create Workspace</Link>
+          <nav className="flex flex-wrap items-center gap-6 text-xs font-black uppercase tracking-widest text-black">
+            <a href="#offer" className="hover:underline">Offer</a>
+            <a href="#systems" className="hover:underline">Systems</a>
+            <Link href="/pricing" className="hover:underline">Pricing</Link>
+            <Link href="/login" className="hover:underline">Login</Link>
+            <Link href="/signup" className="brutalist-button-blue py-2 px-4 border-2">Initialize</Link>
           </nav>
         </div>
       </header>
 
       <section className="shell grid gap-8 py-12 md:grid-cols-[1.35fr_0.65fr] md:py-20">
-        <div className="panel p-8 md:p-12">
-          <p className="display-kicker">{isDigitalItGirl ? 'Predictive Niche Engine' : isEcom ? 'Ecom Operating System' : isMedia ? 'Media Operating System' : isStaffing ? 'Staffing Operating System' : isStudio ? 'Studio Operating System' : 'SaaS Operating System'}</p>
-          <h2 className="display-title mt-4 max-w-4xl">
+        <div className="brutalist-card">
+          <p className="font-black text-secondary uppercase tracking-[0.2em] text-xs">
+            {isDigitalItGirl ? 'Market Analysis Framework' : isEcom ? 'Commerce Operating System' : isMedia ? 'Yield Management System' : isStaffing ? 'Resource Management System' : isStudio ? 'Delivery Management System' : 'Executive Control System'}
+          </p>
+          <h2 className="text-4xl md:text-6xl font-black mt-6 leading-[0.9] uppercase">
             {isDigitalItGirl
-              ? 'Digital niche control for operators turning audience signals into product direction.'
+              ? 'DEPLOY NICHE AUTHORITY MAPPING.'
               : isEcom
-              ? 'Ecommerce control for founders running revenue and inventory at the same time.'
+              ? 'PRESERVE MARGIN INTEGRITY.'
               : isMedia
-              ? 'Media control for founders running revenue and distribution at the same time.'
+              ? 'OPTIMIZE CONTENT YIELD.'
               : isStaffing
-              ? 'High-velocity pipelines and placement control for staffing founders.'
+              ? 'MAXIMIZE PLACEMENT THROUGHPUT.'
               : isStudio
-              ? 'Studio control for founders managing project velocity and team utilization.'
-              : 'SaaS control for founders running revenue and board pressure at the same time.'}
+              ? 'STANDARDIZE PROJECT DELIVERY.'
+              : 'ESTABLISH EXECUTIVE OVERSIGHT.'}
           </h2>
-          <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
+          <p className="mt-8 max-w-2xl text-lg font-bold leading-relaxed text-muted-foreground uppercase">
             {isDigitalItGirl
-              ? 'Audience filters, trend momentum, complaints, and product gaps stay in one command layer.'
+              ? 'Formalize your operating environment with high-integrity data lanes, audience filters, and trend momentum.'
               : isEcom
-              ? 'Demand, inventory, multi-channel revenue, and reporting stay in one command layer.'
+              ? 'Formalize your operating environment with multi-channel revenue integrity and inventory health.'
               : isMedia
-              ? 'Content revenue, audience growth, distribution, and retention stay in one command layer.'
+              ? 'Formalize your operating environment with content distribution watch and subscription retention.'
               : isStaffing
-              ? 'Placement, candidate pipelines, margin control, and reporting stay in one command layer.'
+              ? 'Formalize your operating environment with talent acquisition throughput and placement efficiency.'
               : isStudio
-              ? 'Project velocity, delivery posture, and team utilization stay in one command layer.'
-              : 'Pipeline, onboarding, retention, and investor reporting stay in one command layer.'}
+              ? 'Formalize your operating environment with project velocity tracking and delivery standards.'
+              : 'Formalize your operating environment with institutional reporting, audit trails, and fiscal integrity.'}
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-4">
+          <div className="mt-10 flex flex-wrap gap-4">
             <Link href="/pricing" className="brutalist-button">
-              Review Packages
+              Review Deployment Tiers
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
-            <Link href="/signup" className="brutalist-button-muted">
-              Start Intake
+            <Link href="/signup" className="brutalist-button bg-white text-black">
+              System Intake
             </Link>
           </div>
         </div>
 
-        <aside className="panel p-8">
-          <p className="display-kicker">Operator Snapshot</p>
-          <div className="mt-5 space-y-4">
-            <div className="border-2 border-primary bg-background p-5">
-              <p className="text-sm uppercase tracking-[0.25em] text-muted-foreground">{isDigitalItGirl ? 'Niche confidence' : isEcom ? 'Demand health' : isMedia ? 'Content velocity' : isStaffing ? 'Fill rate confidence' : isStudio ? 'Delivery confidence' : 'Board readiness'}</p>
-              <p className="mt-3 text-4xl font-black text-primary">93%</p>
-              <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                {isDigitalItGirl ? 'Audience fit, trend velocity, and gap size aligned.' : isEcom ? 'Inventory, ROAS, and supply aligned.' : isMedia ? 'Revenue, audience, and distribution aligned.' : isStaffing ? 'Placements, candidates, and margin aligned.' : isStudio ? 'Velocity, delivery, and utilization aligned.' : 'Revenue, burn, and target list aligned.'}
+        <aside className="brutalist-card flex flex-col justify-center bg-gray-50">
+          <p className="font-black text-xs uppercase tracking-[0.2em] mb-6">Operational Snapshot</p>
+          <div className="space-y-6">
+            <div className="border-4 border-black bg-white p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+              <p className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                {isDigitalItGirl ? 'Authority Confidence' : isEcom ? 'Demand Integrity' : isMedia ? 'Yield Stability' : isStaffing ? 'Throughput Confidence' : isStudio ? 'Delivery Stability' : 'Governance Rating'}
+              </p>
+              <p className="mt-3 text-5xl font-black text-primary">93%</p>
+              <p className="mt-4 text-xs font-bold leading-tight uppercase">
+                {isDigitalItGirl ? 'Audience fit, trend velocity, and gap size aligned.' : isEcom ? 'Inventory health and channel revenue aligned.' : isMedia ? 'Content distribution and yield aligned.' : isStaffing ? 'Placements, throughput, and margin aligned.' : isStudio ? 'Velocity, delivery, and utilization aligned.' : 'Governance, fiscal audit, and reporting aligned.'}
               </p>
             </div>
-            <div className="border-2 border-accent bg-background p-5">
-              <p className="text-sm uppercase tracking-[0.25em] text-muted-foreground">Bundles</p>
-              <p className="mt-3 text-2xl font-black text-accent">{isDigitalItGirl ? 'Signal / Command' : isEcom ? 'Starter / Growth' : isMedia ? 'Media Starter / Media Growth' : isStaffing ? 'Staffing Starter / Staffing Growth' : isStudio ? 'Studio Starter / Studio Growth' : 'Core / Executive'}</p>
-              <p className="mt-2 text-sm leading-6 text-muted-foreground">Choose the bundle on pricing.</p>
+            <div className="border-4 border-black bg-secondary p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-white">
+              <p className="text-xs font-black uppercase tracking-widest opacity-80">Deployment Layers</p>
+              <p className="mt-3 text-xl font-black uppercase tracking-tighter">
+                {isDigitalItGirl ? 'Signal / Command' : isEcom ? 'Standard / Growth' : isMedia ? 'Media Standard / Media Growth' : isStaffing ? 'Acquisition / Enterprise' : isStudio ? 'Standard / Enterprise' : 'Core / Executive'}
+              </p>
+              <p className="mt-2 text-xs font-bold uppercase">Initialize on pricing page.</p>
             </div>
           </div>
         </aside>
       </section>
 
       <section id="offer" className="shell py-6">
-        <div className="panel p-8 md:p-10">
+        <div className="brutalist-card bg-white">
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="display-kicker">Why It Lands</p>
-              <h3 className="section-title mt-2">
+              <p className="font-black text-xs uppercase tracking-[0.2em] text-secondary">Strategic Integrity</p>
+              <h3 className="text-2xl font-black uppercase mt-4">
                 {isDigitalItGirl
-                  ? 'One operating layer for segment scoring, product gaps, and market timing.'
+                  ? 'One operational layer for niche authority and market timing.'
                   : isEcom
-                  ? 'One operating layer for demand, product, and margin output.'
+                  ? 'One operational layer for margin integrity and product output.'
                   : isMedia
-                  ? 'One operating layer for audience, revenue, and distribution output.'
+                  ? 'One operational layer for yield management and distribution.'
                   : isStaffing
-                  ? 'One operating layer for pipeline, candidate, and placement output.'
+                  ? 'One operational layer for acquisition and placement throughput.'
                   : isStudio
-                  ? 'One operating layer for velocity, delivery, and team output.'
-                  : 'One operating layer for pipeline, product, and board output.'}
+                  ? 'One operational layer for velocity and delivery standards.'
+                  : 'One operational layer for governance and fiscal oversight.'}
               </h3>
             </div>
-            <p className="max-w-xl text-sm leading-6 text-muted-foreground">
-              Less chasing. More signal.
+            <p className="max-w-xl text-xs font-black uppercase tracking-tighter text-muted-foreground">
+              Institutional clarity. Performance secured.
             </p>
           </div>
 
-          <div className="mt-8 grid gap-5 md:grid-cols-3">
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
             {outcomes.map((item, index) => (
-              <div key={item} className="metric-card">
-                <p className="text-xs uppercase tracking-[0.25em] text-accent">0{index + 1}</p>
-                <p className="mt-4 text-sm leading-6 text-foreground">{item}</p>
+              <div key={item} className="border-4 border-black p-6 bg-gray-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                <p className="text-xs font-black text-primary">0{index + 1}</p>
+                <p className="mt-4 text-sm font-bold uppercase tracking-tighter leading-tight">{item}</p>
               </div>
             ))}
           </div>
@@ -170,82 +176,81 @@ export default function Home() {
 
       <section id="systems" className="shell py-6">
         <div className="grid gap-6 md:grid-cols-3">
-          <div className="panel p-6">
-          {isEcom ? <Radar className="h-5 w-5 text-primary" /> : <Building2 className="h-5 w-5 text-primary" />}
-          <p className="mt-4 text-sm font-bold uppercase tracking-[0.18em]">{isDigitalItGirl ? 'Signal lane' : isEcom ? 'Demand lane' : isMedia ? 'Revenue lane' : isStaffing ? 'Fill rate lane' : isStudio ? 'Velocity lane' : 'Board lane'}</p>
-          <p className="mt-3 text-sm leading-6 text-muted-foreground">
+          <div className="brutalist-card">
+          <Building2 className="h-6 w-6 text-secondary" />
+          <p className="mt-6 text-sm font-black uppercase tracking-widest">{isDigitalItGirl ? 'Signal Lane' : isEcom ? 'Revenue Lane' : isMedia ? 'Yield Lane' : isStaffing ? 'Throughput Lane' : isStudio ? 'Velocity Lane' : 'Governance Lane'}</p>
+          <p className="mt-4 text-xs font-bold uppercase leading-tight text-muted-foreground">
             {isDigitalItGirl
-              ? 'Audience filters, trends, and complaints stay current.'
+              ? 'Market signals, audience trends, and competitive gaps stay current.'
               : isEcom
-              ? 'Inventory, demand, and campaign output stay current.'
+              ? 'Omni-channel revenue, inventory, and campaign integrity stay current.'
               : isMedia
-              ? 'Subscriptions, ad revenue, and sponsorship output stay current.'
+              ? 'Subscription yield, ad revenue, and distribution audit stay current.'
               : isStaffing
-              ? 'Fill rates, candidate sourcing, and market output stay current.'
+              ? 'Fill rates, candidate throughput, and placement audit stay current.'
               : isStudio
-              ? 'Project timelines, velocity tracking, and roadmap output stay current.'
-              : 'Budget, board, and investor output stay current.'}
+              ? 'Project timelines, delivery milestones, and utilization audit stay current.'
+              : 'Fiscal reporting, audit trails, and institutional oversight stay current.'}
           </p>
           </div>
-          <div className="panel p-6">
-          <Briefcase className="h-5 w-5 text-primary" />
-          <p className="mt-4 text-sm font-bold uppercase tracking-[0.18em]">{isDigitalItGirl ? 'Gap lane' : isMedia ? 'Distribution lane' : isStaffing ? 'Pipeline lane' : isStudio ? 'Delivery lane' : 'Revenue lane'}</p>
-          <p className="mt-3 text-sm leading-6 text-muted-foreground">
+          <div className="brutalist-card">
+          <Briefcase className="h-6 w-6 text-secondary" />
+          <p className="mt-6 text-sm font-black uppercase tracking-widest">{isDigitalItGirl ? 'Gap Lane' : isMedia ? 'Distribution Lane' : isStaffing ? 'Acquisition Lane' : isStudio ? 'Delivery Lane' : 'Executive Lane'}</p>
+          <p className="mt-4 text-xs font-bold uppercase leading-tight text-muted-foreground">
             {isDigitalItGirl
-              ? 'Product gaps, pricing angles, and winning product direction stay in line.'
+              ? 'Strategic positioning and authority mapping stay in line.'
               : isEcom
-              ? 'Orders, multi-channel sales, and fulfillment stay in line.'
+              ? 'Multi-channel logistics and fulfillment integrity stay in line.'
               : isMedia
-              ? 'Content reach, platform distribution, and growth experiments stay in line.'
+              ? 'Content reach and distribution growth stay in line.'
               : isStaffing
-              ? 'Pipeline velocity, placement conversion, and recruiter output stay in line.'
+              ? 'Acquisition velocity and placement conversion stay in line.'
               : isStudio
-              ? 'Team output, delivery milestones, and quality output stay in line.'
-              : 'Pipeline, signup conversion, and expansion stay in line.'}
+              ? 'Delivery standards and quality output stay in line.'
+              : 'Operational flows and client integration stay in line.'}
           </p>
           </div>
-          <div className="panel p-6">
-          <ShieldCheck className="h-5 w-5 text-accent" />
-          <p className="mt-4 text-sm font-bold uppercase tracking-[0.18em]">{isDigitalItGirl ? 'Playbook lane' : isMedia ? 'Retention lane' : isStaffing ? 'Control lane' : isStudio ? 'Utilization lane' : 'Control lane'}</p>
-          <p className="mt-3 text-sm leading-6 text-muted-foreground">
+          <div className="brutalist-card">
+          <ShieldCheck className="h-6 w-6 text-primary" />
+          <p className="mt-6 text-sm font-black uppercase tracking-widest">Control Lane</p>
+          <p className="mt-4 text-xs font-bold uppercase leading-tight text-muted-foreground">
             {isDigitalItGirl
-              ? 'Watchlists, monetization playbooks, and approvals stay visible.'
+              ? 'Approvals, watchlists, and monetization frameworks stay visible.'
               : isEcom
-              ? 'Approvals, supply risk, and margins stay visible.'
+              ? 'Approvals, supply risk, and margin preservation stay visible.'
               : isMedia
-              ? 'Approvals, audience health, and churn stay visible.'
+              ? 'Approvals, audience health, and yield risk stay visible.'
               : isStaffing
-              ? 'Approvals, margin risk, and compliance stay visible.'
+              ? 'Approvals, compliance, and margin integrity stay visible.'
               : isStudio
-              ? 'Approvals, team capacity, and utilization stay visible.'
-              : 'Approvals, risk, and churn stay visible.'}
+              ? 'Approvals, resource allocation, and utilization stay visible.'
+              : 'Approvals, governance risk, and fiscal integrity stay visible.'}
           </p>
           </div>
-
         </div>
 
-        <div className="panel mt-6 p-8">
-          <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+        <div className="brutalist-card mt-8 bg-black text-white">
+          <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="display-kicker">Current focus</p>
-              <h3 className="section-title mt-2">
+              <p className="font-black text-xs uppercase tracking-[0.5em] text-primary">System Integrity</p>
+              <h3 className="text-3xl font-black uppercase mt-4 max-w-2xl">
                 {isDigitalItGirl
-                  ? 'Built to keep niche operators ahead of the next demand pocket.'
+                  ? 'ENGINEERED FOR NICHE OPERATORS SECURING MARKET AUTHORITY.'
                   : isEcom
-                  ? 'Built to keep ecommerce operators ready for the next scale cycle.'
+                  ? 'ENGINEERED FOR COMMERCE OPERATORS SECURING MARGIN INTEGRITY.'
                   : isMedia
-                  ? 'Built to keep media founders ready for the next growth cycle.'
+                  ? 'ENGINEERED FOR MEDIA OPERATORS SECURING CONTENT YIELD.'
                   : isStaffing
-                  ? 'Built to keep staffing founders ready for the next placement cycle.'
+                  ? 'ENGINEERED FOR STAFFING OPERATORS SECURING THROUGHPUT.'
                   : isStudio
-                  ? 'Built to keep studio founders ready for the next delivery cycle.'
-                  : 'Built to keep founders ready for the next board or fundraise call.'}
+                  ? 'ENGINEERED FOR STUDIO OPERATORS SECURING DELIVERY STANDARDS.'
+                  : 'ENGINEERED FOR EXECUTIVE OPERATORS SECURING INSTITUTIONAL CONTROL.'}
               </h3>
             </div>
-            <div className="border-2 border-border bg-background px-5 py-4">
-              <Radar className="h-5 w-5 text-accent" />
-              <p className="mt-3 text-xs uppercase tracking-[0.22em] text-muted-foreground">Live dashboard</p>
-              <p className="mt-2 text-sm leading-6 text-foreground">Projects, workflows, approvals, and targets sync after login.</p>
+            <div className="border-4 border-primary bg-white px-8 py-6 text-black shadow-[4px_4px_0px_0px_rgba(255,255,255,0.3)]">
+              <Radar className="h-8 w-8 text-primary" />
+              <p className="mt-4 text-xs font-black uppercase tracking-widest text-muted-foreground">Operational Status</p>
+              <p className="mt-2 text-sm font-bold uppercase">All systems active and synced.</p>
             </div>
           </div>
         </div>
