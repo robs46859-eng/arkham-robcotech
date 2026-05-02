@@ -34,7 +34,7 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-roboto), sans-serif;
+    font-family: var(--font-inter), sans-serif;
     letter-spacing: 0.05em;
     background-image:
       linear-gradient(to right, rgba(0, 0, 0, 0.1) 1px, transparent 1px),

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Monoton, Roboto } from 'next/font/google'
+import { Monoton, Inter } from 'next/font/google'
 import './globals.css'
 
 const monoton = Monoton({
@@ -9,10 +9,9 @@ const monoton = Monoton({
   display: 'swap',
 })
 
-const roboto = Roboto({
-  weight: ['400', '700'],
+const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-roboto',
+  variable: '--font-inter',
   display: 'swap',
 })
 
@@ -28,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${monoton.variable} ${roboto.variable}`}>
+    <html lang="en" className={`${monoton.variable} ${inter.variable}`}>
       <body className="font-sans">{children}</body>
     </html>
   )
