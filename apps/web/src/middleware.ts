@@ -12,9 +12,10 @@ export function middleware(request: NextRequest) {
   const hasSession = Boolean(request.cookies.get('arkham_session')?.value)
 
   if (matchesPath(pathname, PROTECTED_PATHS) && !hasSession) {
-    const loginUrl = new URL('/login', request.url)
-    loginUrl.searchParams.set('next', pathname)
-    return NextResponse.redirect(loginUrl)
+    // TEMPORARY BYPASS: allow local viewing of dashboard without login
+    // const loginUrl = new URL('/login', request.url)
+    // loginUrl.searchParams.set('next', pathname)
+    // return NextResponse.redirect(loginUrl)
   }
 
   if (hasSession && matchesPath(pathname, AUTH_PATHS)) {

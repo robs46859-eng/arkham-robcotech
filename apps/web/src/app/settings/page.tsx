@@ -99,8 +99,8 @@ export default function SettingsPage() {
     >
       {message ? <div className="panel px-6 py-4 text-sm text-muted-foreground">{message}</div> : null}
 
-      <div className="grid gap-6 md:grid-cols-[0.32fr_0.68fr]">
-        <aside className="panel p-3">
+      <div className="grid gap-6 grid-cols-1 lg:grid-cols-[280px_1fr] min-w-0">
+        <aside className="glass-panel p-4 min-w-0 gothic-corners">
           {tabs.map((tab) => {
             const Icon = tab.icon
             const active = activeTab === tab.id
@@ -119,7 +119,7 @@ export default function SettingsPage() {
           })}
         </aside>
 
-        <section className="panel p-8">
+        <section className="glass-panel p-8 min-w-0 gothic-corners">
           {activeTab === 'general' ? (
             <form onSubmit={handleSaveSettings}>
               <p className="display-kicker">General</p>
@@ -204,10 +204,10 @@ export default function SettingsPage() {
                 <h2 className="section-title mt-3">Users and roles</h2>
                 <div className="mt-6 space-y-3">
                   {data.users.map((user) => (
-                    <div key={user.id} className="border-2 border-border bg-background px-4 py-4">
-                      <p className="text-sm font-bold uppercase tracking-[0.16em]">{user.name}</p>
-                      <p className="mt-2 text-xs uppercase tracking-[0.2em] text-muted-foreground">{user.email}</p>
-                      <p className="mt-2 text-xs uppercase tracking-[0.2em] text-muted-foreground">{user.role}</p>
+                    <div key={user.id} className="glass-panel p-4 gothic-corners min-w-0">
+                      <p className="text-sm font-bold uppercase tracking-[0.16em] text-foreground truncate min-w-0">{user.name}</p>
+                      <p className="mt-2 text-xs uppercase tracking-[0.2em] text-muted-foreground truncate min-w-0">{user.email}</p>
+                      <p className="mt-2 text-[10px] uppercase tracking-[0.2em] text-gold font-bold truncate min-w-0">{user.role}</p>
                     </div>
                   ))}
                 </div>
@@ -234,9 +234,9 @@ export default function SettingsPage() {
 
 function InfoRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="border-2 border-border bg-background px-4 py-4">
-      <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">{label}</p>
-      <p className="mt-3 text-sm leading-6 text-foreground">{value}</p>
+    <div className="glass-panel p-4 min-w-0 gothic-corners">
+      <p className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground font-bold truncate min-w-0">{label}</p>
+      <p className="mt-3 text-sm leading-6 text-foreground truncate min-w-0 data-font">{value}</p>
     </div>
   )
 }
@@ -244,9 +244,9 @@ function InfoRow({ label, value }: { label: string; value: string }) {
 function SettingsState({ message }: { message: string }) {
   return (
     <main className="page-auth flex min-h-screen items-center justify-center px-4 py-12">
-      <div className="panel max-w-2xl p-8">
-        <p className="display-kicker">Settings</p>
-        <p className="mt-4 text-sm leading-7 text-muted-foreground">{message}</p>
+      <div className="glass-panel max-w-2xl p-12 text-center gothic-corners">
+        <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold">Settings</p>
+        <p className="mt-4 text-sm leading-7 text-muted-foreground data-font animate-pulse">{message}</p>
       </div>
     </main>
   )

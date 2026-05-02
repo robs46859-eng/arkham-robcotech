@@ -130,41 +130,41 @@ export default function WorkflowsPage() {
           <p className="mt-3 text-sm leading-6 text-muted-foreground">{toolbarCopy}</p>
         </div>
         <div className="flex flex-wrap gap-3">
-          <button type="button" className="brutalist-button" onClick={() => document.getElementById('workflow-create-form')?.scrollIntoView({ behavior: 'smooth' })}>
+          <button type="button" className="premium-button py-2 px-6 text-[10px]" onClick={() => document.getElementById('workflow-create-form')?.scrollIntoView({ behavior: 'smooth' })}>
             New Flow
           </button>
-          <button type="button" className="brutalist-button-muted" disabled={!canCreate || creating} onClick={() => void handleAutomaticWorkflow()}>
+          <button type="button" className="premium-button bg-white/5 border-white/5 py-2 px-6 text-[10px]" disabled={!canCreate || creating} onClick={() => void handleAutomaticWorkflow()}>
             Recommend Flow
           </button>
-          <button type="button" className="brutalist-button-muted" onClick={() => void refresh()}>
+          <button type="button" className="premium-button bg-white/5 border-white/5 py-2 px-6 text-[10px]" onClick={() => void refresh()}>
             Refresh Scores
           </button>
         </div>
       </section>
 
-      <form id="workflow-create-form" className="panel grid gap-4 p-6 md:grid-cols-4" onSubmit={handleCreateWorkflow}>
-        <input name="name" className="brutalist-input" placeholder="Workflow name" disabled={!canCreate || creating} />
-        <select name="templateKey" className="brutalist-input" defaultValue={data.workflowTemplates[0]?.key} disabled={!canCreate || creating}>
+      <form id="workflow-create-form" className="glass-panel grid gap-4 p-6 md:grid-cols-4 min-w-0 gothic-corners" onSubmit={handleCreateWorkflow}>
+        <input name="name" className="brutalist-input min-w-0 h-11" placeholder="Workflow name" disabled={!canCreate || creating} />
+        <select name="templateKey" className="brutalist-input h-11" defaultValue={data.workflowTemplates[0]?.key} disabled={!canCreate || creating}>
           {data.workflowTemplates.map((template) => (
-            <option key={template.key} value={template.key}>{template.label}</option>
+            <option key={template.key} value={template.key} className="bg-card">{template.label}</option>
           ))}
         </select>
-        <select name="sourceProjectId" className="brutalist-input" defaultValue="" disabled={!canCreate || creating}>
-          <option value="">No linked project</option>
+        <select name="sourceProjectId" className="brutalist-input h-11" defaultValue="" disabled={!canCreate || creating}>
+          <option value="" className="bg-card">No linked project</option>
           {data.projects.map((project) => (
-            <option key={project.id} value={project.id}>{project.name}</option>
+            <option key={project.id} value={project.id} className="bg-card">{project.name}</option>
           ))}
         </select>
-        <button type="submit" className="brutalist-button" disabled={!canCreate || creating}>
+        <button type="submit" className="premium-button h-11" disabled={!canCreate || creating}>
           {creating ? 'Creating...' : 'Save Workflow'}
         </button>
       </form>
 
-      <section className="workflow-grid">
-        <div className="space-y-6">
-          <div className="panel p-5">
-            <p className="display-kicker">Categories</p>
-            <div className="mt-5 space-y-3">
+      <section className="workflow-grid min-w-0 mt-8 grid gap-6 lg:grid-cols-3 h-full">
+        <div className="space-y-6 min-w-0 h-full flex flex-col">
+          <div className="glass-panel p-6 min-w-0 gothic-corners">
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-6">Categories</p>
+            <div className="space-y-2">
               {categories.map((category) => (
                 <button
                   key={category}
@@ -173,40 +173,46 @@ export default function WorkflowsPage() {
                     setSelectedCategory(category)
                     setSelectedWorkflowId((data.workflows.find((workflow) => workflow.category === category)?.id) || '')
                   }}
-                  className={`flex w-full items-center justify-between border-2 px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.18em] ${
-                    selectedCategory === category ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-background text-muted-foreground'
+                  className={`flex w-full items-center justify-between px-4 py-3 text-left text-[11px] font-bold uppercase tracking-[0.18em] rounded-lg transition-all border ${
+                    selectedCategory === category ? 'border-discover/30 bg-discover/10 text-discover' : 'border-white/5 bg-white/[0.02] text-muted-foreground hover:text-foreground hover:bg-white/5'
                   }`}
                 >
                   {category}
-                  <span>{data.workflows.filter((workflow) => workflow.category === category).length}</span>
+                  <span className={`px-2 py-0.5 rounded-full text-[9px] ${selectedCategory === category ? 'bg-discover/20' : 'bg-white/5'}`}>{data.workflows.filter((workflow) => workflow.category === category).length}</span>
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="panel p-5">
-            <p className="display-kicker">Workflow List</p>
-            <div className="mt-5 space-y-3">
+          <div className="glass-panel p-6 min-w-0 gothic-corners flex-1 overflow-hidden flex flex-col">
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-6">Workflow List</p>
+            <div className="flex-1 overflow-y-auto custom-scrollbar pr-1">
               {filteredWorkflows.length ? (
-                filteredWorkflows.map((workflow) => (
-                  <button
-                    key={workflow.id}
-                    type="button"
-                    onClick={() => setSelectedWorkflowId(workflow.id)}
-                    className={`w-full border-2 px-4 py-4 text-left ${
-                      workflow.id === activeWorkflow?.id ? 'border-accent bg-background' : 'border-border bg-card'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between gap-4">
-                      <p className="text-xs font-bold uppercase tracking-[0.18em]">{workflow.name}</p>
-                      <span className="status-badge">{workflow.effectiveness}%</span>
+                <div className="space-y-3">
+                  {filteredWorkflows.map((workflow) => (
+                    <div
+                      key={workflow.id}
+                      onClick={() => setSelectedWorkflowId(workflow.id)}
+                      className={`cursor-pointer p-4 rounded-xl border transition-all ${
+                        workflow.id === activeWorkflow?.id ? 'border-monitor/40 bg-monitor/5 shadow-lg shadow-monitor/5' : 'border-white/5 bg-white/[0.02] hover:bg-white/5'
+                      }`}
+                    >
+                      <div className="flex justify-between items-start mb-4">
+                        <div className="min-w-0">
+                          <p className="font-bold uppercase tracking-[0.15em] text-foreground text-xs truncate">{workflow.name}</p>
+                          <p className="mt-1 text-[9px] uppercase tracking-[0.2em] text-muted-foreground truncate">{workflow.trigger}</p>
+                        </div>
+                        <p className="text-lg font-black text-foreground data-font ml-4 shrink-0">{workflow.valueCreated}</p>
+                      </div>
+                      <div className="flex items-center justify-between gap-4">
+                        <span className="text-[9px] font-bold uppercase tracking-widest text-monitor bg-monitor/10 px-2 py-0.5 rounded">{workflow.effectiveness}% Success</span>
+                        <span className="text-[9px] uppercase tracking-widest text-muted-foreground">{workflow.recordsProcessed} ops</span>
+                      </div>
                     </div>
-                    <p className="mt-2 text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{workflow.vertical} / {workflow.bundle}</p>
-                    <p className="mt-3 text-sm leading-6 text-muted-foreground">{workflow.outcome}</p>
-                  </button>
-                ))
+                  ))}
+                </div>
               ) : (
-                <p className="border-2 border-border bg-background px-4 py-5 text-sm leading-6 text-muted-foreground">
+                <p className="text-xs text-muted-foreground p-8 text-center border border-dashed border-white/10 rounded-xl">
                   {emptyState}
                 </p>
               )}
@@ -214,10 +220,10 @@ export default function WorkflowsPage() {
           </div>
         </div>
 
-        <div className="workflow-lab">
+        <div className="workflow-lab lg:col-span-2 min-w-0 flex flex-col glass-panel gothic-corners">
           {activeWorkflow ? (
             <>
-              <div className="border-b-2 border-border px-6 py-5">
+              <div className="border-b border-white/10 px-6 py-5 shrink-0 bg-black/20">
                 <p className="display-kicker">Flow Lab</p>
                 <div className="mt-3 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                   <div>

@@ -108,9 +108,9 @@ export default function ProjectsPage() {
     >
       {message ? <div className="panel px-6 py-4 text-sm text-muted-foreground">{message}</div> : null}
 
-      <section className="panel p-6">
+      <section className="glass-panel p-6 min-w-0 gothic-corners">
         <p className="display-kicker">Lane Coverage</p>
-        <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+        <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-5 min-w-0">
           {laneSummary.map((lane) => (
             <div key={lane.lane} className="border-2 border-border bg-background p-4">
               <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">{lane.lane}</p>
@@ -121,10 +121,10 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      <section className="grid gap-6 xl:grid-cols-[0.94fr_1.06fr]">
-        <div className="panel p-6">
+      <section className="grid gap-6 xl:grid-cols-[0.94fr_1.06fr] min-w-0">
+        <div className="glass-panel p-6 min-w-0 gothic-corners">
           <p className="display-kicker">Connected Sources</p>
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
+          <div className="mt-6 grid gap-4 md:grid-cols-2 min-w-0">
             {data.integrations.length ? (
               data.integrations.map((source) => (
                 <div key={source.id} className="source-card">
@@ -146,36 +146,36 @@ export default function ProjectsPage() {
           </div>
         </div>
 
-        <div className="panel overflow-hidden">
-          <div className="border-b-2 border-border px-6 py-5">
+        <div className="glass-panel overflow-hidden min-w-0 gothic-corners">
+          <div className="border-b border-white/10 px-6 py-5 bg-black/20">
             <p className="display-kicker">Live Table</p>
             <h2 className="mt-3 text-xl font-black uppercase tracking-[0.14em]">Current workspace assets</h2>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-left">
-              <thead className="bg-muted/40">
+            <table className="w-full border-collapse text-left table-fixed">
+              <thead className="bg-white/5 border-b border-white/10">
                 <tr>
-                  <th className="border-b-2 border-border px-5 py-4 text-xs uppercase tracking-[0.25em]">Project</th>
-                  <th className="border-b-2 border-border px-5 py-4 text-xs uppercase tracking-[0.25em]">Stage</th>
-                  <th className="border-b-2 border-border px-5 py-4 text-xs uppercase tracking-[0.25em]">Owner</th>
-                  <th className="border-b-2 border-border px-5 py-4 text-xs uppercase tracking-[0.25em]">Source</th>
-                  <th className="border-b-2 border-border px-5 py-4 text-xs uppercase tracking-[0.25em]">Status</th>
+                  <th className="px-5 py-4 text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground w-1/3">Project</th>
+                  <th className="px-5 py-4 text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground w-1/6">Stage</th>
+                  <th className="px-5 py-4 text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground w-1/6">Owner</th>
+                  <th className="px-5 py-4 text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground w-1/6">Source</th>
+                  <th className="px-5 py-4 text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground w-1/6">Status</th>
                 </tr>
               </thead>
               <tbody>
                 {data.projects.length ? (
                   data.projects.map((project) => (
                     <tr key={project.id} className="border-b border-border/70">
-                      <td className="px-5 py-4 align-top">
-                        <p className="font-bold uppercase tracking-[0.12em]">{project.name}</p>
-                        <p className="mt-2 text-xs uppercase tracking-[0.18em] text-muted-foreground">{project.records}</p>
-                        <p className="mt-2 text-xs uppercase tracking-[0.18em] text-accent">{project.operatingLane}</p>
+                      <td className="px-5 py-4 align-top overflow-hidden">
+                        <p className="font-bold uppercase tracking-[0.12em] truncate min-w-0">{project.name}</p>
+                        <p className="mt-2 text-[10px] uppercase tracking-[0.18em] text-muted-foreground truncate min-w-0 data-font">{project.records}</p>
+                        <p className="mt-2 text-[10px] uppercase tracking-[0.18em] text-primary truncate min-w-0">{project.operatingLane}</p>
                       </td>
-                      <td className="px-5 py-4 text-sm text-muted-foreground">{project.stage}</td>
-                      <td className="px-5 py-4 text-sm text-muted-foreground">{project.owner}</td>
-                      <td className="px-5 py-4 text-sm text-muted-foreground">{project.source}</td>
-                      <td className="px-5 py-4">
-                        <span className="status-badge">{project.status}</span>
+                      <td className="px-5 py-4 text-[10px] text-muted-foreground uppercase tracking-wider truncate min-w-0 data-font">{project.stage}</td>
+                      <td className="px-5 py-4 text-xs text-muted-foreground truncate min-w-0">{project.owner}</td>
+                      <td className="px-5 py-4 text-[10px] text-muted-foreground uppercase tracking-wider truncate min-w-0">{project.source}</td>
+                      <td className="px-5 py-4 overflow-hidden">
+                        <span className="status-badge block truncate min-w-0 max-w-full text-center">{project.status}</span>
                       </td>
                     </tr>
                   ))
@@ -190,8 +190,8 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      <section className="grid gap-6 md:grid-cols-2">
-        <form className="panel p-6" onSubmit={handleUpload}>
+      <section className="grid gap-6 md:grid-cols-2 min-w-0 mt-6">
+        <form className="glass-panel p-6 min-w-0 gothic-corners" onSubmit={handleUpload}>
           <p className="display-kicker">Local Uploads</p>
           <p className="mt-4 text-sm leading-7 text-muted-foreground">Decks, models, churn exports, onboarding docs, and board files.</p>
           <div className="mt-6 grid gap-4">
@@ -209,7 +209,7 @@ export default function ProjectsPage() {
           </div>
         </form>
 
-        <form className="panel p-6" onSubmit={handleConnect}>
+        <form className="glass-panel p-6 min-w-0 gothic-corners" onSubmit={handleConnect}>
           <p className="display-kicker">Connect Source</p>
           <p className="mt-4 text-sm leading-7 text-muted-foreground">Store a source connection record.</p>
           <div className="mt-6 grid gap-4">

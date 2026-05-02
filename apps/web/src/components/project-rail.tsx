@@ -19,58 +19,41 @@ export function ProjectRail({
   subtitle = 'Workspace',
 }: ProjectRailProps) {
   return (
-    <aside className={`project-rail ${collapsed ? 'project-rail-collapsed' : ''}`}>
-      <button type="button" className="rail-toggle" onClick={onToggle} aria-label="Toggle projects rail">
-        {collapsed ? <ChevronLeft className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
-      </button>
+    <aside className={`h-full flex flex-col bg-card border border-white/5 glass-panel rounded-2xl overflow-hidden transition-all duration-300 ${collapsed ? 'w-16' : 'w-[340px]'}`}>
+      <div className="p-5 border-b border-white/5 flex items-center justify-between">
+        {!collapsed && (
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-gold font-bold">{subtitle}</p>
+            <h3 className="mt-1 text-sm font-black uppercase tracking-wider text-foreground">{title}</h3>
+          </div>
+        )}
+        <button type="button" onClick={onToggle} className="p-1.5 hover:bg-white/5 rounded-lg transition-colors text-muted-foreground hover:text-foreground ml-auto">
+          {collapsed ? <ChevronLeft className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+        </button>
+      </div>
 
-      {collapsed ? (
-        <div className="mt-14 flex flex-col items-center gap-4 text-muted-foreground">
-          <FolderKanban className="h-5 w-5" />
-          <Database className="h-5 w-5" />
+      {!collapsed && (
+        <div className="flex-1 overflow-y-auto custom-scrollbar p-3 space-y-2">
+          {projects.map((project) => (
+            <div key={project.id} className="group p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/5 transition-all">
+              <div className="flex justify-between items-start mb-2">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wider text-foreground">{project.name}</p>
+                  <p className="text-[9px] uppercase tracking-widest text-muted-foreground mt-1">{project.operatingLane}</p>
+                </div>
+                <span className="text-[9px] font-bold uppercase tracking-widest text-discover bg-discover/10 border border-discover/10 px-1.5 py-0.5 rounded">
+                  {project.status}
+                </span>
+              </div>
+              <p className="text-[10px] text-muted-foreground truncate opacity-60">{project.source}</p>
+            </div>
+          ))}
+          {!projects.length && (
+            <div className="p-8 text-center border border-dashed border-white/10 rounded-xl">
+              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">No sources linked</p>
+            </div>
+          )}
         </div>
-      ) : (
-        <>
-          <div className="border-b-2 border-border px-5 py-4">
-            <p className="display-kicker">{subtitle}</p>
-            <h3 className="mt-3 text-lg font-black uppercase tracking-[0.14em]">{title}</h3>
-          </div>
-
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-left">
-              <thead className="bg-muted/30">
-                <tr>
-                  <th className="px-5 py-3 text-[10px] uppercase tracking-[0.24em]">Project</th>
-                  <th className="px-5 py-3 text-[10px] uppercase tracking-[0.24em]">Source</th>
-                  <th className="px-5 py-3 text-[10px] uppercase tracking-[0.24em]">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {projects.map((project) => (
-                  <tr key={project.id} className="border-t border-border/70">
-                    <td className="px-5 py-4 align-top">
-                      <p className="text-xs font-bold uppercase tracking-[0.14em]">{project.name}</p>
-                      <p className="mt-1 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">{project.operatingLane}</p>
-                    </td>
-                    <td className="px-5 py-4 text-xs leading-5 text-muted-foreground">{project.source}</td>
-                    <td className="px-5 py-4">
-                      <span className="inline-flex border border-border bg-background px-2 py-1 text-[10px] uppercase tracking-[0.18em] text-accent">
-                        {project.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-                {!projects.length ? (
-                  <tr className="border-t border-border/70">
-                    <td colSpan={3} className="px-5 py-5 text-xs uppercase tracking-[0.18em] text-muted-foreground">
-                      No sources linked yet.
-                    </td>
-                  </tr>
-                ) : null}
-              </tbody>
-            </table>
-          </div>
-        </>
       )}
     </aside>
   )
